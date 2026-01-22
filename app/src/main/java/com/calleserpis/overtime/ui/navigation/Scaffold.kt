@@ -16,7 +16,7 @@ fun OverTimeScaffold(modifier: Modifier) {
             OverTimeTopAppBar()
         },
         bottomBar = {
-            //TODO
+            OverTimeBottomBar(navController)
         },
         floatingActionButton = {
             //TODO
