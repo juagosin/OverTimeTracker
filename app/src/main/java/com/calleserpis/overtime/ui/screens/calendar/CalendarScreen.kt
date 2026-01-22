@@ -1,6 +1,5 @@
 package com.calleserpis.overtime.ui.screens.calendar
 
-import android.R.attr.name
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,12 +30,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.calleserpis.overtime.ui.theme.OverTimeTheme
+import com.calleserpis.overtime.ui.screens.list.OverTimeListItem
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
@@ -50,8 +48,12 @@ import java.util.Locale
 
 @Composable
 fun CalendarScreen() {
-
-    Calendar()
+    Column() {
+        Calendar()
+        Box(modifier = Modifier.padding(16.dp)) {
+            OverTimeListItem()
+        }
+    }
 }
 
 @Composable
@@ -72,7 +74,7 @@ fun Calendar() {
     val coroutineScope = rememberCoroutineScope()
 
 
-    Column(modifier = Modifier.background(colorScheme.surfaceContainer)){
+    Column(modifier = Modifier.background(colorScheme.surfaceContainer)) {
         // Encabezado del mes clickeable
         Row(
             modifier = Modifier
