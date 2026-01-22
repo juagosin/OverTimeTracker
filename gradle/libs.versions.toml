@@ -18,6 +18,7 @@ foundation = "1.9.4"
 datastore = "1.2.0"
 firebase-bom = "34.7.0"
 google-services = "4.4.4"
+compose-calendar = "2.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,7 +47,7 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
-
+compose-calendar = { group = "com.kizitonwose.calendar", name = "compose", version.ref = "compose-calendar" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
