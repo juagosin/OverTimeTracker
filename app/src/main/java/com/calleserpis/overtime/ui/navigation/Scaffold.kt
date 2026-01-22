@@ -13,7 +13,7 @@ fun OverTimeScaffold(modifier: Modifier) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            //TODO
+            OverTimeTopAppBar()
         },
         bottomBar = {
             //TODO
