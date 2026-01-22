@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.HorizontalDivider
@@ -30,11 +32,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.calleserpis.overtime.ui.screens.list.OverTimeListItem
+import com.calleserpis.overtime.ui.theme.cobrada
+import com.calleserpis.overtime.ui.theme.noCobrada
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
@@ -248,6 +253,32 @@ fun Day(day: CalendarDay) {
             .aspectRatio(1f), // This is important for square sizing!
         contentAlignment = Alignment.Center
     ) {
-        Text(text = day.date.dayOfMonth.toString())
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = day.date.dayOfMonth.toString())
+            if (day.date.dayOfMonth.toString() == "20") {
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .padding(horizontal = 1.dp)
+                        .clip(CircleShape)
+                        .background(
+                            cobrada
+                        )
+                )
+            }
+            if (day.date.dayOfMonth.toString() == "13") {
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .padding(horizontal = 1.dp)
+                        .clip(CircleShape)
+                        .background(
+                            noCobrada
+                        )
+                )
+            }
+        }
     }
 }
