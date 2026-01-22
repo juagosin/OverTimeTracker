@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.calleserpis.overtime.ui.screens.calendar.CalendarScreen
+import com.calleserpis.overtime.ui.screens.list.ListScreen
 
 @Composable
 fun OverTimeNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
@@ -16,6 +17,9 @@ fun OverTimeNavHost(modifier: Modifier = Modifier, navController: NavHostControl
     ){
         composable(Screens.Home.route){
             CalendarScreen()
+        }
+        composable(Screens.List.route){
+            ListScreen()
         }
 
     }

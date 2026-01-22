@@ -13,7 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun OverTimeBottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute : String? = navBackStackEntry?.destination?.route
+    val currentRoute: String? = navBackStackEntry?.destination?.route
 
     NavigationBar() {
         NavigationBarItem(
@@ -27,7 +27,7 @@ fun OverTimeBottomBar(navController: NavHostController) {
                 navController.navigate(Screens.Home.route)
             },
             icon = {
-                Icon( Screens.Home.icon, contentDescription = "")
+                Icon(Screens.Home.icon, contentDescription = "")
             }
         )
         NavigationBarItem(
@@ -38,11 +38,11 @@ fun OverTimeBottomBar(navController: NavHostController) {
             },
             selected = currentRoute == Screens.List.route,
             onClick = {
-            //TODO
-            //navController.navigate(Screens.List.route)
+
+                navController.navigate(Screens.List.route)
             },
             icon = {
-                Icon( Screens.List.icon, contentDescription = "")
+                Icon(Screens.List.icon, contentDescription = "")
             }
         )
 
