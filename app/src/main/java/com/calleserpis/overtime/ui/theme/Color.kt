@@ -222,7 +222,7 @@ val surfaceContainerHighestDarkHighContrast = Color(0xFF45474C)
 
 
 val cobrada = Color(0xFF4CAF50)
-val noCobrada = Color(0xFFF44336)
+val noCobrada = Color(0xFFFFC107)
 
 
 
