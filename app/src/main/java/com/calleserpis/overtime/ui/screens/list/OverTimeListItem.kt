@@ -28,13 +28,17 @@ import androidx.compose.ui.unit.sp
 import com.calleserpis.overtime.ui.theme.cobrada
 
 @Composable
-fun OverTimeListItem() {
+fun OverTimeListItem(onNavigateToDetail: () -> Unit) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         )
+        ,
+        onClick = {
+            onNavigateToDetail()
+        }
     ) {
         Row(
             modifier = Modifier

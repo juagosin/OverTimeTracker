@@ -47,11 +47,13 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun CalendarScreen() {
+fun CalendarScreen(onNavigateToDetail: () -> Unit) {
     Column() {
         Calendar()
         Box(modifier = Modifier.padding(16.dp)) {
-            OverTimeListItem()
+            OverTimeListItem(
+                onNavigateToDetail = onNavigateToDetail
+            )
         }
     }
 }
@@ -179,8 +181,8 @@ fun MonthYearPickerDialog(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .background(
-                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                                    else MaterialTheme.colorScheme.surface
+                                    if (isSelected) colorScheme.primaryContainer
+                                    else colorScheme.surface
                                 )
                                 .clickable { onMonthSelected(month) }
                                 .padding(vertical = 12.dp, horizontal = 16.dp),
@@ -193,15 +195,15 @@ fun MonthYearPickerDialog(
                                     .replaceFirstChar { it.uppercase() },
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                                else MaterialTheme.colorScheme.onSurface
+                                color = if (isSelected) colorScheme.onPrimaryContainer
+                                else colorScheme.onSurface
                             )
                             Text(
                                 text = month.year.toString(),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                                else MaterialTheme.colorScheme.onSurface
+                                color = if (isSelected) colorScheme.onPrimaryContainer
+                                else colorScheme.onSurface
                             )
                         }
                         if (month != months.last()) {

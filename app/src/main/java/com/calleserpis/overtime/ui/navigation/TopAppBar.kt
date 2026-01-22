@@ -3,6 +3,7 @@ package com.calleserpis.overtime.ui.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialogDefaults.titleContentColor
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,24 +24,32 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun OverTimeTopAppBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute: String? = navBackStackEntry?.destination?.route
+    var colorTopBar = topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+    )
+
     TopAppBar(
-        title = {
-            Text(
-                text = "OverTime",
-                modifier = Modifier.padding(12.dp)
-            )
-        },
-        colors = topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
+        title =
+            {
+                Text(
+                    text = "OverTime",
+                    modifier = Modifier.padding(12.dp)
+                )
+
+            },
+        colors = colorTopBar,
 
         navigationIcon = {
-            if (currentRoute == Screens.List.route) {
+            if (currentRoute != Screens.Home.route) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
             }
         }

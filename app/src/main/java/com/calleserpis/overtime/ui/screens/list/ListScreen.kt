@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ListScreen() {
+fun ListScreen(onNavigateToDetail: () -> Unit) {
 
     Column(
         modifier = Modifier
@@ -21,10 +21,18 @@ fun ListScreen() {
 
         verticalArrangement = Arrangement.Top
     ) {
-        OverTimeListItem()
-        OverTimeListItem()
-        OverTimeListItem()
-        OverTimeListItem()
+        OverTimeListItem(
+            onNavigateToDetail = onNavigateToDetail
+        )
+        OverTimeListItem(
+            onNavigateToDetail = onNavigateToDetail
+        )
+        OverTimeListItem(
+            onNavigateToDetail = onNavigateToDetail
+        )
+        OverTimeListItem(
+            onNavigateToDetail = onNavigateToDetail
+        )
     }
 
 }

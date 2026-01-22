@@ -10,13 +10,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun OverTimeScaffold(modifier: Modifier) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute: String? = navBackStackEntry?.destination?.route
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -26,15 +30,17 @@ fun OverTimeScaffold(modifier: Modifier) {
             OverTimeBottomBar(navController)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }
-                , containerColor = colorScheme.primary
-                , contentColor = colorScheme.onPrimary
-            ){
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Añadir",
-                    modifier = Modifier.size(24.dp)
-                )
+            if(currentRoute != Screens.Detail.route) {
+                FloatingActionButton(onClick = { /*TODO*/ },
+                    containerColor = colorScheme.primary,
+                    contentColor = colorScheme.onPrimary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Añadir",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     ){
