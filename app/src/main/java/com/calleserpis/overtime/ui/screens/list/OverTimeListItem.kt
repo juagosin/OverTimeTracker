@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.calleserpis.overtime.ui.theme.cobrada
 
 @Composable
-fun OverTimeListItem(onNavigateToDetail: () -> Unit) {
+fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
         shape = RoundedCornerShape(16.dp),
@@ -37,7 +37,7 @@ fun OverTimeListItem(onNavigateToDetail: () -> Unit) {
         )
         ,
         onClick = {
-            onNavigateToDetail()
+            onNavigateToDetail(null)
         }
     ) {
         Row(

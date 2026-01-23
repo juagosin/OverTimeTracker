@@ -52,7 +52,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun CalendarScreen(onNavigateToDetail: () -> Unit) {
+fun CalendarScreen(onNavigateToDetail: (Long?) -> Unit) {
     Column() {
         Calendar()
         Box(modifier = Modifier.padding(16.dp)) {

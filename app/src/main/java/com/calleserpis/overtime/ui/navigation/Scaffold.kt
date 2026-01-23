@@ -30,7 +30,7 @@ fun OverTimeScaffold(modifier: Modifier) {
             OverTimeBottomBar(navController)
         },
         floatingActionButton = {
-            if(currentRoute != Screens.Detail.route) {
+            if(currentRoute?.contains("Detail") == false) {
                 FloatingActionButton(onClick = { /*TODO*/ },
                     containerColor = colorScheme.primary,
                     contentColor = colorScheme.onPrimary

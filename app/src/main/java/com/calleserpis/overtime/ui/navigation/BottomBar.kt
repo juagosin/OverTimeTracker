@@ -22,9 +22,9 @@ fun OverTimeBottomBar(navController: NavHostController) {
                     text = "Calendario"
                 )
             },
-            selected = currentRoute == Screens.Home.route,
+            selected = currentRoute?.contains("Home") == true,
             onClick = {
-                navController.navigate(Screens.Home.route)
+                navController.navigate(Screens.Home)
             },
             icon = {
                 Icon(Screens.Home.icon, contentDescription = "")
@@ -36,10 +36,10 @@ fun OverTimeBottomBar(navController: NavHostController) {
                     text = "Listado"
                 )
             },
-            selected = currentRoute == Screens.List.route,
+            selected = currentRoute?.contains("List") == true,
             onClick = {
 
-                navController.navigate(Screens.List.route)
+                navController.navigate(Screens.List)
             },
             icon = {
                 Icon(Screens.List.icon, contentDescription = "")

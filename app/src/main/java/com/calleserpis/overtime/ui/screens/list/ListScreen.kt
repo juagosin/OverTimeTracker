@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ListScreen(onNavigateToDetail: () -> Unit) {
+fun ListScreen(onNavigateToDetail: (Long?) -> Unit) {
 
     Column(
         modifier = Modifier

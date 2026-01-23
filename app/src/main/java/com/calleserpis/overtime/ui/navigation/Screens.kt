@@ -10,26 +10,22 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Screens {
     abstract val route: String
-    abstract val icon: ImageVector
+
 
     @Serializable
     data object Home: Screens(){
         override val route: String = "home"
-        override val icon: ImageVector = Icons.Default.CalendarMonth
+        val icon: ImageVector = Icons.Default.CalendarMonth
     }
 
     @Serializable
-
     data object List: Screens(){
         override val route: String = "list"
-        override val icon: ImageVector = Icons.Default.DensitySmall
+        val icon: ImageVector = Icons.Default.DensitySmall
     }
 
     @Serializable
-
-    data object Detail: Screens(){
+    data class Detail( val recordId: Long? = null): Screens(){
         override val route: String = "detail"
-        override val icon: ImageVector = Icons.Default.Home
-
     }
 }

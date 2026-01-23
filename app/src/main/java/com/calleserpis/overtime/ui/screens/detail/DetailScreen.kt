@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.room.util.TableInfo
 
 @Composable
-fun DetailScreen() {
+fun DetailScreen(recordId: Long? = null,) {
     var selectedOption by remember { mutableStateOf("Cobrada") }
     var selectedTime by remember { mutableStateOf("18:00") }
     Column(
