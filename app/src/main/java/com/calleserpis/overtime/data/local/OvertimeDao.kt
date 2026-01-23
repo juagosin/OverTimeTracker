@@ -11,6 +11,9 @@ interface OvertimeDao {
     @Query("SELECT * FROM overtime_entry where id = :id")
     fun getOvertimeEntry(id: Int): Flow<OvertimeEntryEntity>
 
+    @Query("SELECT * FROM overtime_entry order by dateIni desc")
+    fun getOvertimeEntries(): Flow<List<OvertimeEntryEntity>>
+
     @Query("DELETE FROM overtime_entry where id = :id")
     suspend fun deleteOvertimeEntry(id: Int)
 
