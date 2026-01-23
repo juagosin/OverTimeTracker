@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.room.Room
 import com.calleserpis.overtime.data.local.OvertimeDatabase
 import com.calleserpis.overtime.data.preferences.OvertimePreferencesManager
+import com.calleserpis.overtime.data.repository.OvertimeRepositoryImpl
+import com.calleserpis.overtime.domain.repository.OvertimeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +34,14 @@ object AppModule {
         @ApplicationContext context: Context
     ): OvertimePreferencesManager {
         return OvertimePreferencesManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOvertimeRepository(
+        db: OvertimeDatabase,
+        overtimePreferencesManager: OvertimePreferencesManager
+    ): OvertimeRepository {
+        return OvertimeRepositoryImpl(db.dao, overtimePreferencesManager)
     }
 }
