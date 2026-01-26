@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.util.TableInfo
 
 @Composable
@@ -63,13 +64,15 @@ fun DetailScreen(recordId: Long? = null,) {
             modifier = Modifier.fillMaxWidth()
 
         )
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text("Fecha") },
-            modifier = Modifier.fillMaxWidth()
+        DatePickerTextField(
+            value = null,
+            onValueChange = {
+                //TODO
+            },
+            label = "",
+            modifier = Modifier.fillMaxWidth(),
 
-        )
+            )
         //spinners de hora ini y hora fin
         Row(
             modifier = Modifier.fillMaxWidth(),
