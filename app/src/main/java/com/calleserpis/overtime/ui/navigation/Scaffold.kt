@@ -30,8 +30,11 @@ fun OverTimeScaffold(modifier: Modifier) {
             OverTimeBottomBar(navController)
         },
         floatingActionButton = {
-            if(currentRoute?.contains("Detail") == false) {
-                FloatingActionButton(onClick = { /*TODO*/ },
+            if (currentRoute?.contains("Detail") == false) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(Screens.Detail(recordId = null))
+                    },
                     containerColor = colorScheme.primary,
                     contentColor = colorScheme.onPrimary
                 ) {
@@ -43,8 +46,7 @@ fun OverTimeScaffold(modifier: Modifier) {
                 }
             }
         }
-    ){
-        innerPadding ->
+    ) { innerPadding ->
         OverTimeNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
 
     }
