@@ -31,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,13 +45,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.util.TableInfo
 
 @Composable
-fun DetailScreen(recordId: Long? = null,) {
+fun DetailScreen(recordId: Long? = null,
+                 viewModel: DetailScreenViewModel = hiltViewModel()
+) {
     var selectedOption by remember { mutableStateOf("Cobrada") }
     var selectedTime by remember { mutableStateOf("18:00") }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,8 +65,10 @@ fun DetailScreen(recordId: Long? = null,) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.empresa,
+            onValueChange = {
+                viewModel.onEvent(DetailEvent.OnEmpresaChanged(it))
+            },
             label = { Text("Empresa") },
             modifier = Modifier.fillMaxWidth()
 
