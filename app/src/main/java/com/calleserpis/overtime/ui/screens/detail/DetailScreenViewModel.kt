@@ -19,6 +19,11 @@ fun onEvent(event: DetailEvent){
         is DetailEvent.OnEmpresaChanged ->{
             _state.update { it.copy(empresa = event.value) }
         }
+        is DetailEvent.OnDetallesChanged ->{
+            _state.update { it.copy(detalles = event.value) }
+        }
+
+        else -> {}
     }
 }
 

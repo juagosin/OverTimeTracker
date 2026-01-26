@@ -110,8 +110,11 @@ fun DetailScreen(recordId: Long? = null,
             }
         }
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = state.detalles,
+            onValueChange = {
+                viewModel.onEvent(DetailEvent.OnDetallesChanged(it))
+            },
+            placeholder = {Text("Noche, fin de semana, notas...")}, //TODO ->Poner el texto en clarito
             label = { Text("Concepto") },
             modifier = Modifier.fillMaxWidth(),
             minLines = 3,

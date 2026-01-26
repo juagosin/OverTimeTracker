@@ -3,6 +3,7 @@ package com.calleserpis.overtime.ui.screens.detail
 data class DetailState (
 
     val empresa: String = "",
+    val detalles: String = "",
 
 
     val isSaving: Boolean = false,
