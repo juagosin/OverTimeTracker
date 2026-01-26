@@ -7,6 +7,8 @@ import com.calleserpis.overtime.data.local.OvertimeDatabase
 import com.calleserpis.overtime.data.preferences.OvertimePreferencesManager
 import com.calleserpis.overtime.data.repository.OvertimeRepositoryImpl
 import com.calleserpis.overtime.domain.repository.OvertimeRepository
+import com.calleserpis.overtime.domain.use_cases.AddOvertimeUseCase
+import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,5 +45,15 @@ object AppModule {
         overtimePreferencesManager: OvertimePreferencesManager
     ): OvertimeRepository {
         return OvertimeRepositoryImpl(db.dao, overtimePreferencesManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOvertimeUseCases(
+        repository: OvertimeRepository
+    ): OverTimeUseCases {
+        return OverTimeUseCases(
+            addOvertimeUseCase = AddOvertimeUseCase(repository)
+        )
     }
 }
