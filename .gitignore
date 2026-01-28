@@ -34,3 +34,5 @@ google-services.json
 *.hprof
 /app/release
 
+PROJECT_CONTEXT.md
+WORKFLOW_FEATURE_ADAPTED.md
