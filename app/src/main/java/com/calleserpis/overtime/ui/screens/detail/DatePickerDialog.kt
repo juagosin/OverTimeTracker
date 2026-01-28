@@ -73,14 +73,29 @@ fun DatePickerDialogCustom(
     )
 
     if (!showTimePicker) {
+        // CRÍTICO: Convertir UTC del DatePicker a componentes de fecha en zona local
+        val selectedDateUtc = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
+
+        // Extraer año, mes, día de la fecha UTC seleccionada
+        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+            timeInMillis = selectedDateUtc
+        }
+        val year = utcCalendar.get(Calendar.YEAR)
+        val month = utcCalendar.get(Calendar.MONTH)
+        val day = utcCalendar.get(Calendar.DAY_OF_MONTH)
         DatePickerDialog(
             onDismissRequest = onDismiss,
             confirmButton = {
                 TextButton(
                     onClick = {
-                        if (datePickerState.selectedDateMillis != null) {
-                            showTimePicker = true
+                        // Crear fecha en zona local con los componentes extraídos
+                        val finalCalendar = Calendar.getInstance().apply {
+                            set(year, month, day, 0, 0, 0)
+                            set(Calendar.MILLISECOND, 0)
                         }
+
+                        onDateSelected(finalCalendar.timeInMillis)
+                        showTimePicker = false
                     }
                 ) {
                     Text(text = "Aceptar")
@@ -118,6 +133,14 @@ fun DatePickerDialogCustom(
             initialMinute = currentTime.get(Calendar.MINUTE),
             is24Hour = true
         )
+        // Crear fecha en zona local con los componentes extraídos
+        val finalCalendar = Calendar.getInstance().apply {
+            set(year, month, day, timePickerState.hour, timePickerState.minute, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        onDateSelected(finalCalendar.timeInMillis)
+        showTimePicker = false
 
     }
 }
