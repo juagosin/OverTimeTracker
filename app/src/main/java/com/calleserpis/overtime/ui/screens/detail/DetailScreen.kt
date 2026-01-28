@@ -74,9 +74,9 @@ fun DetailScreen(recordId: Long? = null,
 
         )
         DatePickerTextField(
-            value = null,
+            value = state.date,
             onValueChange = {
-                //TODO
+                viewModel.onEvent(DetailEvent.OnDateChanged(it))
             },
             label = "",
             modifier = Modifier.fillMaxWidth(),

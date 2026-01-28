@@ -33,7 +33,7 @@ fun DatePickerTextField(
     enabled: Boolean = true,
     isError: Boolean = false,
     supportingText: String? = null,
-    pattern: String = "dd/MM/yyyy HH:mm"
+    pattern: String = "dd/MM/yyyy"
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
