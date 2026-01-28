@@ -95,6 +95,8 @@ fun DetailScreen(recordId: Long? = null,
                     initialMinute = 0,
                     onTimeChanged = { hour, minute ->
                         selectedTime = String.format("%02d:%02d", hour, minute)
+                        viewModel.onEvent(DetailEvent.OnFechaIniChanged(selectedTime))
+
                     }
                 )
             }
@@ -105,6 +107,9 @@ fun DetailScreen(recordId: Long? = null,
                     initialMinute = 0,
                     onTimeChanged = { hour, minute ->
                         selectedTime = String.format("%02d:%02d", hour, minute)
+                        viewModel.onEvent(DetailEvent.OnFechaFinChanged(selectedTime))
+
+
                     }
                 )
             }
@@ -128,7 +133,9 @@ fun DetailScreen(recordId: Long? = null,
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedButton(
-            onClick = { },
+            onClick = {
+                viewModel.onEvent(DetailEvent.OnSave)
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorScheme.primary,
                 contentColor = colorScheme.onPrimary
