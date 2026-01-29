@@ -4,6 +4,7 @@ data class DetailState(
 
     val empresa: String = "",
     val detalles: String = "",
+    val categoria: String = "",
     val date: Long? = System.currentTimeMillis(),
     val horaIni: String = "",
     val horaFin: String = "",

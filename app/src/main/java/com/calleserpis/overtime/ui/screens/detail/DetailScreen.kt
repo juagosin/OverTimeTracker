@@ -52,12 +52,16 @@ import androidx.room.util.TableInfo
 
 @Composable
 fun DetailScreen(recordId: Long? = null,
-                 viewModel: DetailScreenViewModel = hiltViewModel()
+                 viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved:() ->Unit
 ) {
-    var selectedOption by remember { mutableStateOf("Cobrada") }
+    var selectedOption by remember { mutableStateOf("Pendiente") }
     var selectedTime by remember { mutableStateOf("18:00") }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    if(state.isSuccess){
+        onOverTimeSaved()
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -129,7 +133,9 @@ fun DetailScreen(recordId: Long? = null,
         Spacer(modifier = Modifier.height(4.dp))
         SegmentedSwitch(
             selectedOption = selectedOption,
-            onOptionSelected = { selectedOption = it },
+            onOptionSelected = { selectedOption = it
+                               viewModel.onEvent(DetailEvent.OnCategoriaChanged(selectedOption))
+            },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedButton(
@@ -152,7 +158,7 @@ fun SegmentedSwitch(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
     option1: String = "Cobrada",
-    option2: String = "No Cobrada",
+    option2: String = "Pendiente",
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -194,7 +200,6 @@ private fun SegmentedButton(
                 if (isSelected) colorScheme.primary
                 else Color.Transparent
             )
-            //.clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
             .padding(vertical = 12.dp),
         contentAlignment = Alignment.Center

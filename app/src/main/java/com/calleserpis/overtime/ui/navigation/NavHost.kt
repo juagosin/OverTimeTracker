@@ -30,7 +30,10 @@ fun OverTimeNavHost(modifier: Modifier = Modifier, navController: NavHostControl
         composable<Screens.Detail> { backStackEntry ->
             val detail: Screens.Detail = backStackEntry.toRoute()
 
-            DetailScreen(recordId = detail.recordId)
+            DetailScreen(recordId = detail.recordId,
+                onOverTimeSaved = {
+                    navController.popBackStack()
+                })
         }
 
     }

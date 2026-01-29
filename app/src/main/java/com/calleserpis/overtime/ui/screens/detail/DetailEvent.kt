@@ -9,6 +9,8 @@ sealed class DetailEvent {
 
     data class OnFechaFinChanged(val value: String) : DetailEvent()
 
+    data class OnCategoriaChanged(val value: String) : DetailEvent()
+
     object OnSave : DetailEvent()
 
 }
