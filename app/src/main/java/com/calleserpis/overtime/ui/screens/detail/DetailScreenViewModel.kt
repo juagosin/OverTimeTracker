@@ -1,15 +1,20 @@
 package com.calleserpis.overtime.ui.screens.detail
 
 import android.util.Log
+import android.util.Log.e
 import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.calleserpis.overtime.domain.model.Overtime
 import com.calleserpis.overtime.domain.model.OvertimeCategory
+import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
@@ -17,7 +22,9 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailScreenViewModel @Inject constructor() : ViewModel() {
+class DetailScreenViewModel @Inject constructor(
+    private val overtimeUseCases: OverTimeUseCases
+) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
     val state: StateFlow<DetailState> = _state.asStateFlow()
@@ -27,83 +34,99 @@ class DetailScreenViewModel @Inject constructor() : ViewModel() {
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     init {
-     // Inicializamos la hora ini, hora fin y categoria por si no la toca el usuario
-        _state.update { it.copy(horaIni = "18:00")}
+        // Inicializamos la hora ini, hora fin y categoria por si no la toca el usuario
+        _state.update { it.copy(horaIni = "18:00") }
         _state.update { it.copy(horaFin = "18:00") }
-        _state.update { it.copy(categoria = "Pendiente")}
+        _state.update { it.copy(categoria = "Pendiente") }
     }
-fun onEvent(event: DetailEvent){
-    when(event){
-        is DetailEvent.OnEmpresaChanged ->{
-            _state.update { it.copy(empresa = event.value) }
-        }
-        is DetailEvent.OnDetallesChanged ->{
-            _state.update { it.copy(detalles = event.value) }
-        }
-        is DetailEvent.OnDateChanged ->{
-            _state.update { it.copy(date = event.value) }
-        }
-        is DetailEvent.OnFechaIniChanged -> {
-            _state.update { it.copy(horaIni = event.value) }
-        }
-        is DetailEvent.OnFechaFinChanged -> {
-            _state.update { it.copy(horaFin = event.value) }
-        }
-        is DetailEvent.OnCategoriaChanged -> {
-            _state.update { it.copy(categoria = event.value) }
 
-        }
-        is DetailEvent.OnSave ->{
-            saveOverTime()
-        }
+    fun onEvent(event: DetailEvent) {
+        when (event) {
+            is DetailEvent.OnEmpresaChanged -> {
+                _state.update { it.copy(empresa = event.value) }
+            }
 
-        else -> {}
+            is DetailEvent.OnDetallesChanged -> {
+                _state.update { it.copy(detalles = event.value) }
+            }
+
+            is DetailEvent.OnDateChanged -> {
+                _state.update { it.copy(date = event.value) }
+            }
+
+            is DetailEvent.OnFechaIniChanged -> {
+                _state.update { it.copy(horaIni = event.value) }
+            }
+
+            is DetailEvent.OnFechaFinChanged -> {
+                _state.update { it.copy(horaFin = event.value) }
+            }
+
+            is DetailEvent.OnCategoriaChanged -> {
+                _state.update { it.copy(categoria = event.value) }
+
+            }
+
+            is DetailEvent.OnSave -> {
+                saveOverTime()
+            }
+
+            else -> {}
+        }
     }
-}
 
     private fun saveOverTime() {
         _state.update { it.copy(isSaving = true) }
 
         try {
-            val state = _state.value
-            val fechaInicioLong = calcularTimestamp(
-                fechaLong = state.date,
-                horaString = state.horaIni
-            )
+            viewModelScope.launch {
+                val state = _state.value
+                val fechaInicioLong = calcularTimestamp(
+                    fechaLong = state.date,
+                    horaString = state.horaIni
+                )
 
-            var fechaFinLong = calcularTimestamp(
-                fechaLong = state.date,
-                horaString = state.horaFin
-            )
+                var fechaFinLong = calcularTimestamp(
+                    fechaLong = state.date,
+                    horaString = state.horaFin
+                )
 
 
-            if(fechaFinLong!! <= fechaInicioLong!!){
-                fechaFinLong = fechaFinLong.plus(86_400_000L) // le sumamos 24h ya que la hora de fin es menor que la de inicio
+                if (fechaFinLong!! <= fechaInicioLong!!) {
+                    fechaFinLong =
+                        fechaFinLong.plus(86_400_000L) // le sumamos 24h ya que la hora de fin es menor que la de inicio
+
+                }
+                overtimeUseCases.addOvertimeUseCase(Overtime(
+                    0,
+                    _state.value.empresa,
+                    fechaInicioLong,
+                    fechaFinLong,
+                    OvertimeCategory.fromString(_state.value.categoria),
+                    _state.value.detalles
+
+                ))
+                var Overtime = Overtime(
+                    0,
+                    _state.value.empresa,
+                    fechaInicioLong,
+                    fechaFinLong,
+                    OvertimeCategory.fromString(_state.value.categoria),
+                    _state.value.detalles
+
+                )
+
+                _state.update { it.copy(isSuccess = true) }
 
             }
-            var Overtime = Overtime(0,
-                _state.value.empresa,
-                fechaInicioLong,
-                fechaFinLong,
-                OvertimeCategory.fromString(_state.value.categoria),
-                _state.value.detalles
 
-            )
-
-            _state.update { it.copy(isSuccess = true) }
-
-
-
-        }
-        catch (e:Exception) {
+        } catch (e: Exception) {
             Log.e("DetailScreenViewModel", "Error :", e)
             _state.update { it.copy(isSuccess = false) }
         }
 
         _state.update { it.copy(isSaving = false) }
     }
-
-
 
 
     private fun calcularTimestamp(fechaLong: Long?, horaString: String): Long? {
