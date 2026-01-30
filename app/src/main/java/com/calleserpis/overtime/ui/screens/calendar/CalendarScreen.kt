@@ -291,11 +291,13 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState) {
         ) {
             Text(text = day.date.dayOfMonth.toString())
             Row() {
+                var showEmptyBox = true
                 stateCalendar.monthEntries.forEach {
                     if ((it.dateIni.toDayOfMonth()
                             .toString() == day.date.dayOfMonth.toString()) && (it.dateIni.toMonth()
                             .toString() == day.date.monthValue.toString())
                     ) {
+                        showEmptyBox = false
                         val colorCirculo =
                             if (it.categoria.toString() == "COBRADA") cobrada else noCobrada
                         Box(
@@ -308,7 +310,18 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState) {
                                 )
                         )
                     }
-                    //Text( text = )
+
+                }
+                if (showEmptyBox) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .padding(horizontal = 1.dp)
+                            .clip(CircleShape)
+                            .background(
+                                Color.Transparent
+                            )
+                    )
                 }
             }
 
