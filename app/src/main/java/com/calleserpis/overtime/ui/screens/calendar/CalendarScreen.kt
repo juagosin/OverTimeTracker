@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.screens.calendar
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,16 +35,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.calleserpis.overtime.data.local.toDayOfMonth
+import com.calleserpis.overtime.data.local.toMonth
 import com.calleserpis.overtime.ui.screens.list.OverTimeListItem
 import com.calleserpis.overtime.ui.theme.cobrada
 import com.calleserpis.overtime.ui.theme.noCobrada
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import kotlinx.coroutines.launch
@@ -52,7 +60,10 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun CalendarScreen(onNavigateToDetail: (Long?) -> Unit) {
+fun CalendarScreen(
+    viewModel: CalendarViewModel = hiltViewModel(),
+    onNavigateToDetail: (Long?) -> Unit
+) {
     Column() {
         Calendar()
         Box(modifier = Modifier.padding(16.dp)) {
@@ -64,7 +75,8 @@ fun CalendarScreen(onNavigateToDetail: (Long?) -> Unit) {
 }
 
 @Composable
-fun Calendar() {
+fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
+    val stateCalendar by viewModel.state.collectAsStateWithLifecycle()
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
     val endMonth = remember { currentMonth.plusMonths(0) } // Adjust as needed
@@ -75,12 +87,24 @@ fun Calendar() {
         startMonth = startMonth,
         endMonth = endMonth,
         firstVisibleMonth = currentMonth,
-        firstDayOfWeek = firstDayOfWeek
+        firstDayOfWeek = firstDayOfWeek,
+
     )
     var showMonthPicker by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
+    LaunchedEffect(state.firstVisibleMonth.yearMonth){
 
+        viewModel.onEvent(CalendarEvent.OnMonthChanged(state.firstVisibleMonth.yearMonth))
+
+
+    }
+    LaunchedEffect(stateCalendar.monthEntries) {
+        Log.d("CalendarScreen", "Entradas actualizadas: ${stateCalendar.monthEntries.size}")
+        stateCalendar.monthEntries.forEach { entry ->
+            Log.d("CalendarScreen", "  → Entry ID: ${entry.id}, Date: ${entry.dateIni}")
+        }
+    }
     Column(modifier = Modifier.background(colorScheme.surfaceContainer)) {
         // Encabezado del mes clickeable
         Row(
@@ -107,7 +131,7 @@ fun Calendar() {
 
         HorizontalCalendar(
             state = state,
-            dayContent = { Day(it) },
+            dayContent = { Day(it,stateCalendar) },
             monthHeader = {
                 DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
             }
@@ -125,6 +149,8 @@ fun Calendar() {
             onMonthSelected = { selectedMonth ->
                 coroutineScope.launch {
                     state.animateScrollToMonth(selectedMonth)
+                    //viewModel.onEvent(CalendarEvent.OnMonthChanged(selectedMonth))
+
                 }
                 showMonthPicker = false
             }
@@ -247,38 +273,45 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 }
 
 @Composable
-fun Day(day: CalendarDay) {
+fun Day(day: CalendarDay, stateCalendar: CalendarState) {
+    val colorbackground = if (day.position == DayPosition.MonthDate) {
+        Color.White
+    } else {
+        Color.LightGray
+    }
     Box(
         modifier = Modifier
-            .aspectRatio(1f), // This is important for square sizing!
+            .aspectRatio(1f)
+            .background(colorbackground)
+        , // This is important for square sizing!
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = day.date.dayOfMonth.toString())
-            if (day.date.dayOfMonth.toString() == "20") {
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .padding(horizontal = 1.dp)
-                        .clip(CircleShape)
-                        .background(
-                            cobrada
+            Row() {
+                stateCalendar.monthEntries.forEach {
+                    if ((it.dateIni.toDayOfMonth()
+                            .toString() == day.date.dayOfMonth.toString()) && (it.dateIni.toMonth()
+                            .toString() == day.date.monthValue.toString())
+                    ) {
+                        val colorCirculo =
+                            if (it.categoria.toString() == "COBRADA") cobrada else noCobrada
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .padding(horizontal = 1.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    colorCirculo
+                                )
                         )
-                )
+                    }
+                    //Text( text = )
+                }
             }
-            if (day.date.dayOfMonth.toString() == "13") {
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .padding(horizontal = 1.dp)
-                        .clip(CircleShape)
-                        .background(
-                            noCobrada
-                        )
-                )
-            }
+
         }
     }
 }

@@ -14,6 +14,13 @@ interface OvertimeDao {
     @Query("SELECT * FROM overtime_entry order by dateIni desc")
     fun getOvertimeEntries(): Flow<List<OvertimeEntryEntity>>
 
+    @Query("""
+        SELECT * FROM overtime_entry 
+        WHERE dateIni >= :startDate AND dateIni < :endDate 
+        ORDER BY dateIni DESC
+    """)
+    fun getOvertimeEntriesByMonth(startDate: Long, endDate: Long): Flow<List<OvertimeEntryEntity>>
+
     @Query("DELETE FROM overtime_entry where id = :id")
     suspend fun deleteOvertimeEntry(id: Int)
 

@@ -9,6 +9,8 @@ interface OvertimeRepository {
 
     fun getOvertimeEntries(): Flow<List<Overtime>>
 
+    fun getOvertimeEntriesByMonth(yearMonth: String): Flow<List<Overtime>>
+
     //TODO obtener entradas de un día en concreto
 
     suspend fun deleteOvertimeEntry(id: Int?)
