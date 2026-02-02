@@ -1,6 +1,5 @@
 package com.calleserpis.overtime.ui.screens.calendar
 
-import android.R.attr.onClick
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -65,19 +64,28 @@ fun CalendarScreen(
     viewModel: CalendarViewModel = hiltViewModel(),
     onNavigateToDetail: (Long?) -> Unit
 ) {
+    val stateCalendar by viewModel.state.collectAsStateWithLifecycle()
+
+
     Column() {
-        Calendar()
+        Calendar(stateCalendar)
         Box(modifier = Modifier.padding(16.dp)) {
-            OverTimeListItem(
-                onNavigateToDetail = onNavigateToDetail
-            )
+            Column() {
+                if (stateCalendar.dayEntries.isNotEmpty()) {
+                    stateCalendar.dayEntries.forEach { entry ->
+                        OverTimeListItem(
+                            onNavigateToDetail = onNavigateToDetail, entry
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
-    val stateCalendar by viewModel.state.collectAsStateWithLifecycle()
+fun Calendar(stateCalendar: CalendarState, viewModel: CalendarViewModel = hiltViewModel()) {
+
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
     val endMonth = remember { currentMonth.plusMonths(0) } // Adjust as needed
@@ -90,11 +98,11 @@ fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
         firstVisibleMonth = currentMonth,
         firstDayOfWeek = firstDayOfWeek,
 
-    )
+        )
     var showMonthPicker by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(state.firstVisibleMonth.yearMonth){
+    LaunchedEffect(state.firstVisibleMonth.yearMonth) {
 
         viewModel.onEvent(CalendarEvent.OnMonthChanged(state.firstVisibleMonth.yearMonth))
 
@@ -106,10 +114,7 @@ fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
             Log.d("CalendarScreen", "  → Entry ID: ${entry.id}, Date: ${entry.dateIni}")
         }
     }
-    LaunchedEffect(stateCalendar.dayEntries) {
-        viewModel.onEvent(CalendarEvent.OnDateSelected(stateCalendar.selectedDate))
 
-    }
     Column(modifier = Modifier.background(colorScheme.surfaceContainer)) {
         // Encabezado del mes clickeable
         Row(
@@ -136,12 +141,14 @@ fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
 
         HorizontalCalendar(
             state = state,
-            dayContent = { Day(
-                it, stateCalendar,
-                onClick = {
-                    viewModel.onEvent(CalendarEvent.OnDateSelected(it.date))
-                }
-            ) },
+            dayContent = {
+                Day(
+                    it, stateCalendar,
+                    onClick = {
+                        viewModel.onEvent(CalendarEvent.OnDateSelected(it.date))
+                    }
+                )
+            },
             monthHeader = {
                 DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
             }
@@ -296,8 +303,7 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -
                 enabled = day.position == DayPosition.MonthDate,
                 onClick = { onClick(day) }
             )
-            .background(colorbackground)
-        , // This is important for square sizing!
+            .background(colorbackground), // This is important for square sizing!
         contentAlignment = Alignment.Center
     ) {
         Column(

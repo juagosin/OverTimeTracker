@@ -28,7 +28,7 @@ class CalendarViewModel @Inject constructor(
     private var loadDayEntriesJob: Job? = null
     init {
 
-        //monthChanged(YearMonth.now())
+        dateSelected(LocalDate.now())
 
     }
 
@@ -47,6 +47,7 @@ class CalendarViewModel @Inject constructor(
     }
 
     private fun dateSelected(date: LocalDate) {
+        Log.d("CalendarViewModel", "Date selected: $date")
         loadDayEntriesJob?.cancel()
         loadDayEntriesJob = viewModelScope.launch {
             try{

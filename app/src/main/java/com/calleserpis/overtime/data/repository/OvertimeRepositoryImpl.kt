@@ -28,17 +28,12 @@ class OvertimeRepositoryImpl(
 
     override fun getOvertimeEntriesByMonth(yearMonth: String): Flow<List<Overtime>> {
         val (startDate, endDate) = yearMonth.toMonthRange()
-        Log.d("OvertimeRepo", "=== Query Debug ===")
-        Log.d("OvertimeRepo", "Input yearMonth: $yearMonth")
-        Log.d("OvertimeRepo", "startDate (Long): $startDate")
-        Log.d("OvertimeRepo", "endDate (Long): $endDate")
-        Log.d("OvertimeRepo", "startDate (Date): ${Date(startDate)}")
-        Log.d("OvertimeRepo", "endDate (Date): ${Date(endDate)}")
+
         return overtimeDao.getOvertimeEntriesByMonth(startDate, endDate).onEach {
                 entities ->
-            Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
+           // Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
             entities.forEach { entity ->
-                Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
+              //  Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
             }
         }.map { it.toDomain() }
     }
@@ -46,17 +41,12 @@ class OvertimeRepositoryImpl(
 
     override fun getOvertimeEntriesByMonthDay(yearMonthDay: String): Flow<List<Overtime>> {
         val (startDate, endDate) = yearMonthDay.toMonthDayRange()
-        Log.d("OvertimeRepo", "=== Query Debug ===")
-        Log.d("OvertimeRepo", "Input yearMonth: $yearMonthDay")
-        Log.d("OvertimeRepo", "startDate (Long): $startDate")
-        Log.d("OvertimeRepo", "endDate (Long): $endDate")
-        Log.d("OvertimeRepo", "startDate (Date): ${Date(startDate)}")
-        Log.d("OvertimeRepo", "endDate (Date): ${Date(endDate)}")
+
         return overtimeDao.getOvertimeEntriesByMonthDay(startDate, endDate).onEach {
                 entities ->
-            Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
+
             entities.forEach { entity ->
-                Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
+                //Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
             }
         }.map { it.toDomain() }
     }

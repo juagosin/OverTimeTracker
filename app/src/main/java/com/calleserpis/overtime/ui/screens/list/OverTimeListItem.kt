@@ -25,10 +25,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.calleserpis.overtime.data.local.timeDifference
+import com.calleserpis.overtime.data.local.toDayOfMonth
+import com.calleserpis.overtime.data.local.toHourMinute
+import com.calleserpis.overtime.data.local.toMonthShortName
+import com.calleserpis.overtime.domain.model.Overtime
 import com.calleserpis.overtime.ui.theme.cobrada
+import com.calleserpis.overtime.ui.theme.noCobrada
 
 @Composable
-fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
+fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
         shape = RoundedCornerShape(16.dp),
@@ -64,12 +70,12 @@ fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
 
                 )
                 Text(
-                    text = "20",
+                    text = entry.dateIni.toDayOfMonth().toString(),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Nov",
+                    text = entry.dateIni.toMonthShortName(),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -80,7 +86,7 @@ fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "ACME Corp.Empresa con nombre largo",
+                    text = entry.empresa,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
@@ -90,21 +96,27 @@ fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "18:00 - 20:00",
+                    text = entry.dateIni.toHourMinute()+" - "+entry.dateFin.toHourMinute(),
                     fontSize = 14.sp,
                     )
                 Row(verticalAlignment = Alignment.CenterVertically){
+                    var textOvertime = "Pendiente"
+                    var colorOvertime = noCobrada
+                    if(entry.categoria.toString() == "COBRADA"){
+                        textOvertime = "Cobrada"
+                        colorOvertime = cobrada
+                    }
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
-                        contentDescription = "Pagado",
-                        tint = cobrada,
+                        contentDescription = textOvertime,
+                        tint = colorOvertime,
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = "Cobrada",
                         fontSize = 13.sp,
-                        color = cobrada,
+                        color = colorOvertime,
                         fontWeight = FontWeight.Medium
                     )
                 }
@@ -112,7 +124,7 @@ fun OverTimeListItem(onNavigateToDetail: (Long?)  -> Unit) {
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "2H",
+                text = timeDifference(entry.dateIni, entry.dateFin),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
 

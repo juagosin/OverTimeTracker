@@ -1,8 +1,13 @@
 package com.calleserpis.overtime.data.local
 
+import androidx.compose.ui.text.capitalize
+import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Calendar
+import java.util.Locale
 
 fun String.toMonthRange(): Pair<Long, Long> {
     val parts = this.split("-")
@@ -58,8 +63,34 @@ fun Long.toDayOfMonth(): Int {
     calendar.timeInMillis = this
     return calendar.get(Calendar.DAY_OF_MONTH)
 }
+fun Long.toMonthShortName(locale: Locale = Locale.getDefault()): String {
+    return Instant.ofEpochMilli(this)
+        .atZone(ZoneId.systemDefault())
+        .month
+        .getDisplayName(TextStyle.SHORT, locale).replaceFirstChar { it.uppercase() }
+}
 fun Long.toMonth(): Int {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this
     return calendar.get(Calendar.MONTH) +1
+}
+fun Long.toHourMinute(): String {
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    return Instant.ofEpochMilli(this)
+        .atZone(ZoneId.systemDefault())
+        .format(formatter)
+
+}
+
+// Alternativa: función de extensión más clara
+fun timeDifference(startTimestamp: Long, endTimestamp: Long): String {
+    val duration = Duration.between(
+        Instant.ofEpochMilli(startTimestamp),
+        Instant.ofEpochMilli(endTimestamp)
+    ).abs()
+
+    val hours = duration.toHours()
+    val minutes = duration.toMinutes() % 60
+
+    return String.format("%02dH %02dM", hours, minutes)
 }
