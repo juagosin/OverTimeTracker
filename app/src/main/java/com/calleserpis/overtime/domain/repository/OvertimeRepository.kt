@@ -10,6 +10,7 @@ interface OvertimeRepository {
     fun getOvertimeEntries(): Flow<List<Overtime>>
 
     fun getOvertimeEntriesByMonth(yearMonth: String): Flow<List<Overtime>>
+    fun getOvertimeEntriesByMonthDay(yearMonthDay: String): Flow<List<Overtime>>
 
     //TODO obtener entradas de un día en concreto
 

@@ -2,6 +2,7 @@ package com.calleserpis.overtime.data.repository
 
 import android.util.Log
 import com.calleserpis.overtime.data.local.OvertimeDao
+import com.calleserpis.overtime.data.local.toMonthDayRange
 import com.calleserpis.overtime.data.local.toMonthRange
 import com.calleserpis.overtime.data.mapper.toDomain
 import com.calleserpis.overtime.data.mapper.toEntity
@@ -34,6 +35,24 @@ class OvertimeRepositoryImpl(
         Log.d("OvertimeRepo", "startDate (Date): ${Date(startDate)}")
         Log.d("OvertimeRepo", "endDate (Date): ${Date(endDate)}")
         return overtimeDao.getOvertimeEntriesByMonth(startDate, endDate).onEach {
+                entities ->
+            Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
+            entities.forEach { entity ->
+                Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
+            }
+        }.map { it.toDomain() }
+    }
+
+
+    override fun getOvertimeEntriesByMonthDay(yearMonthDay: String): Flow<List<Overtime>> {
+        val (startDate, endDate) = yearMonthDay.toMonthDayRange()
+        Log.d("OvertimeRepo", "=== Query Debug ===")
+        Log.d("OvertimeRepo", "Input yearMonth: $yearMonthDay")
+        Log.d("OvertimeRepo", "startDate (Long): $startDate")
+        Log.d("OvertimeRepo", "endDate (Long): $endDate")
+        Log.d("OvertimeRepo", "startDate (Date): ${Date(startDate)}")
+        Log.d("OvertimeRepo", "endDate (Date): ${Date(endDate)}")
+        return overtimeDao.getOvertimeEntriesByMonthDay(startDate, endDate).onEach {
                 entities ->
             Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
             entities.forEach { entity ->

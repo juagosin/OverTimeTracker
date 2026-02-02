@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.screens.calendar
 
+import android.R.attr.onClick
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -105,6 +106,10 @@ fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
             Log.d("CalendarScreen", "  → Entry ID: ${entry.id}, Date: ${entry.dateIni}")
         }
     }
+    LaunchedEffect(stateCalendar.dayEntries) {
+        viewModel.onEvent(CalendarEvent.OnDateSelected(stateCalendar.selectedDate))
+
+    }
     Column(modifier = Modifier.background(colorScheme.surfaceContainer)) {
         // Encabezado del mes clickeable
         Row(
@@ -131,7 +136,12 @@ fun Calendar(viewModel: CalendarViewModel = hiltViewModel()) {
 
         HorizontalCalendar(
             state = state,
-            dayContent = { Day(it,stateCalendar) },
+            dayContent = { Day(
+                it, stateCalendar,
+                onClick = {
+                    viewModel.onEvent(CalendarEvent.OnDateSelected(it.date))
+                }
+            ) },
             monthHeader = {
                 DaysOfWeekTitle(daysOfWeek = daysOfWeek) // Use the title as month header
             }
@@ -273,7 +283,7 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 }
 
 @Composable
-fun Day(day: CalendarDay, stateCalendar: CalendarState) {
+fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -> Unit) {
     val colorbackground = if (day.position == DayPosition.MonthDate) {
         Color.White
     } else {
@@ -282,6 +292,10 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState) {
     Box(
         modifier = Modifier
             .aspectRatio(1f)
+            .clickable(
+                enabled = day.position == DayPosition.MonthDate,
+                onClick = { onClick(day) }
+            )
             .background(colorbackground)
         , // This is important for square sizing!
         contentAlignment = Alignment.Center

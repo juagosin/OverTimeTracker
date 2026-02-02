@@ -28,6 +28,31 @@ fun String.toMonthRange(): Pair<Long, Long> {
 
     return Pair(startDate, endDate)
 }
+fun String.toMonthDayRange(): Pair<Long, Long> {
+    val parts = this.split("-")
+    require(parts.size == 3) { "El formato debe ser YYYY-MM-DD" }
+
+    val year = parts[0].toInt()
+    val month = parts[1].toInt()
+    val day = parts[2].toInt()
+
+    val calendar = Calendar.getInstance().apply {
+        set(Calendar.YEAR, year)
+        set(Calendar.MONTH, month - 1)
+        set(Calendar.DAY_OF_MONTH, day)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+
+    val startDate = calendar.timeInMillis
+
+    calendar.add(Calendar.DAY_OF_MONTH, 1)
+    val endDate = calendar.timeInMillis
+
+    return Pair(startDate, endDate)
+}
 fun Long.toDayOfMonth(): Int {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this

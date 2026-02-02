@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.YearMonth
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class CalendarViewModel @Inject constructor(
     private val _state = MutableStateFlow(CalendarState())
     val state: StateFlow<CalendarState> = _state.asStateFlow()
     private var loadEntriesJob: Job? = null
+    private var loadDayEntriesJob: Job? = null
     init {
 
         //monthChanged(YearMonth.now())
@@ -37,10 +39,29 @@ class CalendarViewModel @Inject constructor(
             }
 
             is CalendarEvent.OnDateSelected -> {
+                dateSelected(event.date)
 
             }
 
         }
+    }
+
+    private fun dateSelected(date: LocalDate) {
+        loadDayEntriesJob?.cancel()
+        loadDayEntriesJob = viewModelScope.launch {
+            try{
+                overtimeUseCases.getOvertimeEntriesByMonthDayUseCase(date.toString())
+                    .collect { entries ->
+                        _state.update { currentState ->
+                            currentState.copy(dayEntries = entries)
+                        }
+                    }
+            }
+            catch (e: Exception){
+                _state.update { it.copy(dayEntries = emptyList()) }
+            }
+        }
+
     }
 
     private fun monthChanged(month: YearMonth) {
