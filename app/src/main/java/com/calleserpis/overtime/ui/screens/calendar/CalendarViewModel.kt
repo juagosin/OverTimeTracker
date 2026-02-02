@@ -68,7 +68,7 @@ class CalendarViewModel @Inject constructor(
     private fun monthChanged(month: YearMonth) {
         loadEntriesJob?.cancel()
         loadEntriesJob = viewModelScope.launch {
-
+            _state.update { it.copy(dayEntries = emptyList()) }
             try {
 
                 overtimeUseCases.getOvertimeEntriesByMonthUseCase(month.toString())

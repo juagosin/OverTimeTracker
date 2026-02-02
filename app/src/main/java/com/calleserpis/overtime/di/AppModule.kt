@@ -10,6 +10,7 @@ import com.calleserpis.overtime.domain.repository.OvertimeRepository
 import com.calleserpis.overtime.domain.use_cases.AddOvertimeUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthDayUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthUseCase
+import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesUseCase
 import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases
 import dagger.Module
 import dagger.Provides
@@ -57,7 +58,8 @@ object AppModule {
         return OverTimeUseCases(
             addOvertimeUseCase = AddOvertimeUseCase(repository),
             getOvertimeEntriesByMonthUseCase = GetOvertimeEntriesByMonthUseCase(repository),
-            getOvertimeEntriesByMonthDayUseCase = GetOvertimeEntriesByMonthDayUseCase(repository)
+            getOvertimeEntriesByMonthDayUseCase = GetOvertimeEntriesByMonthDayUseCase(repository),
+            getOvertimeEntriesUseCase = GetOvertimeEntriesUseCase(repository)
         )
     }
 }
