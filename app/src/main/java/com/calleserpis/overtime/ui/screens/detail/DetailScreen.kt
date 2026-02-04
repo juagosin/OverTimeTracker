@@ -44,6 +44,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.calleserpis.overtime.ui.theme.cobrada
+import com.calleserpis.overtime.ui.theme.noCobrada
 
 @Composable
 fun DetailScreen(
@@ -174,6 +176,21 @@ fun DetailScreen(
         ) {
             Text("Guardar")
         }
+
+        if (recordId != null) {
+            OutlinedButton(
+                onClick = {
+                    viewModel.onEvent(DetailEvent.OnSave)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorScheme.errorContainer,
+                    contentColor = colorScheme.onError
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Borrar", color = colorScheme.error)
+            }
+        }
     }
 }
 
@@ -198,7 +215,7 @@ fun SegmentedSwitch(
             modifier = Modifier.weight(1f)
         )
 
-        Spacer(modifier = Modifier.width(4.dp))
+        //Spacer(modifier = Modifier.width(4.dp))
 
         SegmentedButton(
             text = option2,
@@ -217,12 +234,13 @@ private fun SegmentedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val colorButton = if (text == "Cobrada") cobrada else noCobrada
     Box(
         modifier = modifier
 
             .background(
-                if (isSelected) colorScheme.primary
-                else Color.Transparent
+                if (isSelected) colorButton
+                else colorButton.copy(alpha=0.1f)
             )
             .clickable { onClick() }
             .padding(vertical = 12.dp),

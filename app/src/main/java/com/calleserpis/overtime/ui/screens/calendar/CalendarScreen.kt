@@ -109,9 +109,9 @@ fun Calendar(stateCalendar: CalendarState, viewModel: CalendarViewModel = hiltVi
 
     }
     LaunchedEffect(stateCalendar.monthEntries) {
-        Log.d("CalendarScreen", "Entradas actualizadas: ${stateCalendar.monthEntries.size}")
+
         stateCalendar.monthEntries.forEach { entry ->
-            Log.d("CalendarScreen", "  → Entry ID: ${entry.id}, Date: ${entry.dateIni}")
+
         }
     }
 
