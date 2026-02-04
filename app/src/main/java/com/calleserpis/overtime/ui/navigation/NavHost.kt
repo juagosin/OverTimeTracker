@@ -19,21 +19,27 @@ fun OverTimeNavHost(modifier: Modifier = Modifier, navController: NavHostControl
     ) {
         composable<Screens.Home> {
             CalendarScreen(
-                onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId  = recordId)) }
+                onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId = recordId)) }
             )
         }
         composable<Screens.List> {
             ListScreen(
-                onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId  = recordId)) }
+                onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId = recordId)) }
             )
         }
         composable<Screens.Detail> { backStackEntry ->
             val detail: Screens.Detail = backStackEntry.toRoute()
 
-            DetailScreen(recordId = detail.recordId,
+            DetailScreen(
+                recordId = detail.recordId,
                 onOverTimeSaved = {
                     navController.popBackStack()
-                })
+                },
+                onOverTimeDeleted = {
+                    navController.popBackStack()
+                }
+            )
+
         }
 
     }

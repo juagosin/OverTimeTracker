@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.screens.detail
 
+import android.R.attr.dialogTitle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,8 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -26,6 +29,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,12 +55,12 @@ import com.calleserpis.overtime.ui.theme.noCobrada
 @Composable
 fun DetailScreen(
     recordId: Long? = null,
-    viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved: () -> Unit
+    viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved: () -> Unit, onOverTimeDeleted: () -> Unit
 ) {
     var selectedOption by remember { mutableStateOf("Pendiente") }
     var selectedTime by remember { mutableStateOf("18:00") }
 
-
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     var initialHourIni by remember { mutableIntStateOf(18) }
@@ -65,6 +70,9 @@ fun DetailScreen(
 
     if (state.isSuccess) {
         onOverTimeSaved()
+    }
+    if(state.isSuccessDeleted){
+        onOverTimeDeleted()
     }
     LaunchedEffect(recordId) {
         if (recordId != null) {
@@ -180,7 +188,8 @@ fun DetailScreen(
         if (recordId != null) {
             OutlinedButton(
                 onClick = {
-                    viewModel.onEvent(DetailEvent.OnSave)
+                    //viewModel.onEvent(DetailEvent.OnSave)
+                    showDeleteDialog = true
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorScheme.errorContainer,
@@ -190,6 +199,43 @@ fun DetailScreen(
             ) {
                 Text("Borrar", color = colorScheme.error)
             }
+        }
+
+        if(showDeleteDialog){
+            AlertDialog(
+                icon = {
+                    Icon(Icons.Filled.Delete, contentDescription = "Icono Borrar")
+                },
+                title = {
+                    Text(text = "Vas a borrar un resgistro")
+                },
+                text = {
+                    Text(text = "¿Estás seguro que quieres borrar este registro?")
+                },
+                onDismissRequest = {
+                    showDeleteDialog = false
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            viewModel.onEvent(DetailEvent.DeleteOvertimeEntry(state.id))
+                            showDeleteDialog = false
+                        }
+                    ) {
+                        Text("Borrar")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            showDeleteDialog = false
+                        }
+                    ) {
+                        Text("Cancelar")
+                    }
+                }
+            )
+
         }
     }
 }
@@ -318,7 +364,7 @@ fun TimePickerColumn(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
                 contentDescription = "Incrementar",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                tint = colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
 
@@ -352,8 +398,10 @@ fun TimePickerColumn(
             Icon(
                 imageVector = Icons.Default.KeyboardArrowDown,
                 contentDescription = "Decrementar",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                tint = colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
     }
 }
+
+

@@ -12,7 +12,9 @@ sealed class DetailEvent {
     data class OnCategoriaChanged(val value: String) : DetailEvent()
 
     data class LoadOvertimeEntry(val id: Long) : DetailEvent()
+    data class DeleteOvertimeEntry(val id: Int) : DetailEvent()
 
     object OnSave : DetailEvent()
+
 
 }

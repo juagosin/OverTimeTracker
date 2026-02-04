@@ -11,8 +11,10 @@ data class DetailState(
 
 
     val isSaving: Boolean = false,
+    val isDeleting: Boolean = false,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
     val isSuccess: Boolean = false,
+    val isSuccessDeleted: Boolean = false,
     val error: String? = null
 )

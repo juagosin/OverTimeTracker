@@ -5,6 +5,8 @@ data class OverTimeUseCases (
     val getOvertimeEntriesByMonthUseCase: GetOvertimeEntriesByMonthUseCase,
     val getOvertimeEntriesByMonthDayUseCase: GetOvertimeEntriesByMonthDayUseCase,
     val getOvertimeEntriesUseCase: GetOvertimeEntriesUseCase,
-    val getOvertimeEntryByIdUseCase: GetOvertimeEntryByIdUseCase
+    val getOvertimeEntryByIdUseCase: GetOvertimeEntryByIdUseCase,
+    val deleteOvertimeUseCase: DeleteOvertimeUseCase
+
 
 )

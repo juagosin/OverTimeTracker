@@ -77,8 +77,28 @@ class DetailScreenViewModel @Inject constructor(
 
             }
 
+            is DetailEvent.DeleteOvertimeEntry -> {
+                deleteOvertime(event.id.toInt())
+            }
+
+
             else -> {}
         }
+    }
+
+    private fun deleteOvertime(id: Int) {
+        _state.update { it.copy(isDeleting = true) }
+        _state.update { it.copy(isSuccessDeleted = false) }
+
+        viewModelScope.launch {
+            try {
+                overtimeUseCases.deleteOvertimeUseCase(id)
+                _state.update { it.copy(isSuccessDeleted = true) }
+            } catch (e: Exception) {
+                Log.e("DetailScreenViewModel", "Error :", e)
+            }
+        }
+        _state.update { it.copy(isDeleting = false) }
     }
 
     private fun loadOvertimeEntry(id: Int) {
@@ -97,7 +117,7 @@ class DetailScreenViewModel @Inject constructor(
                                 categoria = overtime?.categoria?.name ?: "",
                                 horaIni = DateUtils.formatTime(overtime?.dateIni!!),
                                 horaFin = DateUtils.formatTime(overtime.dateFin),
-                                )
+                            )
 
                         }
 

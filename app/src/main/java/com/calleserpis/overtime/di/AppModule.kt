@@ -8,6 +8,7 @@ import com.calleserpis.overtime.data.preferences.OvertimePreferencesManager
 import com.calleserpis.overtime.data.repository.OvertimeRepositoryImpl
 import com.calleserpis.overtime.domain.repository.OvertimeRepository
 import com.calleserpis.overtime.domain.use_cases.AddOvertimeUseCase
+import com.calleserpis.overtime.domain.use_cases.DeleteOvertimeUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthDayUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesUseCase
@@ -61,7 +62,8 @@ object AppModule {
             getOvertimeEntriesByMonthUseCase = GetOvertimeEntriesByMonthUseCase(repository),
             getOvertimeEntriesByMonthDayUseCase = GetOvertimeEntriesByMonthDayUseCase(repository),
             getOvertimeEntriesUseCase = GetOvertimeEntriesUseCase(repository),
-            getOvertimeEntryByIdUseCase = GetOvertimeEntryByIdUseCase(repository)
+            getOvertimeEntryByIdUseCase = GetOvertimeEntryByIdUseCase(repository),
+            deleteOvertimeUseCase = DeleteOvertimeUseCase(repository)
         )
     }
 }
