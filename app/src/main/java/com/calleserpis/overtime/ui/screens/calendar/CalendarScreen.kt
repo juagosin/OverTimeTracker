@@ -292,9 +292,9 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 @Composable
 fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -> Unit) {
     var colorbackground = if (day.position == DayPosition.MonthDate) {
-        Color.White
+        colorScheme.surfaceContainerLowest
     } else {
-        Color.LightGray
+        colorScheme.surfaceContainer
     }
     var isToday = false
     if ((day.position == DayPosition.MonthDate) && (
