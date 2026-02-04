@@ -36,12 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.calleserpis.overtime.R
 import com.calleserpis.overtime.data.local.toDayOfMonth
 import com.calleserpis.overtime.data.local.toMonth
 import com.calleserpis.overtime.ui.screens.list.OverTimeListItem
@@ -197,7 +199,7 @@ fun MonthYearPickerDialog(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "Seleccionar mes y año",
+                    text = stringResource(R.string.select_date),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 16.dp)
@@ -267,7 +269,7 @@ fun MonthYearPickerDialog(
                         .align(Alignment.End)
                         .padding(top = 8.dp)
                 ) {
-                    Text("Cerrar")
+                    Text(stringResource(R.string.txt_close))
                 }
             }
         }
