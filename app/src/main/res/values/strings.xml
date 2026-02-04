@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">OverTime</string>
     <string name="txt_close">Cerrar</string>
+    <string name="btnGuardar">Guardar</string>
+    <string name="btnBorrar">Borrar</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string name="titleAlert">Vas a borrar un registro</string>
+    <string name="txtAlert">¿Estás seguro que quieres borrar este registro?</string>
+
+    <string name="titleCalendarioScreen">Calendario</string>
+    <string name="titleListadoScreen">Listado</string>
 
     <string name="txt_pendiente">Pendiente</string>
     <string name="txt_cobrada">Cobrada</string>
+
+    <string name="txt_empresa">Empresa</string>
+    <string name="txt_concepto">Concepto</string>
+    <string name="txt_conceptoPlaceHolder">Noche, fin de semana, notas...</string>
+    <string name="txt_horaIni">Hora Inicio</string>
+    <string name="txt_horaFin">Hora Fin</string>
 
     <string name="select_date">Seleccionar mes y año</string>
 

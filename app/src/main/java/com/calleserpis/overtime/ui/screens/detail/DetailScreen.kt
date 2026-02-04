@@ -1,6 +1,5 @@
 package com.calleserpis.overtime.ui.screens.detail
 
-import android.R.attr.dialogTitle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,7 +23,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -40,8 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,13 +46,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.calleserpis.overtime.R
 import com.calleserpis.overtime.ui.theme.cobrada
 import com.calleserpis.overtime.ui.theme.noCobrada
 
 @Composable
 fun DetailScreen(
     recordId: Long? = null,
-    viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved: () -> Unit, onOverTimeDeleted: () -> Unit
+    viewModel: DetailScreenViewModel = hiltViewModel(),
+    onOverTimeSaved: () -> Unit,
+    onOverTimeDeleted: () -> Unit
 ) {
     var selectedOption by remember { mutableStateOf("Pendiente") }
     var selectedTime by remember { mutableStateOf("18:00") }
@@ -71,7 +71,7 @@ fun DetailScreen(
     if (state.isSuccess) {
         onOverTimeSaved()
     }
-    if(state.isSuccessDeleted){
+    if (state.isSuccessDeleted) {
         onOverTimeDeleted()
     }
     LaunchedEffect(recordId) {
@@ -106,7 +106,7 @@ fun DetailScreen(
             onValueChange = {
                 viewModel.onEvent(DetailEvent.OnEmpresaChanged(it))
             },
-            label = { Text("Empresa") },
+            label = { Text(stringResource(R.string.txt_empresa)) },
             modifier = Modifier.fillMaxWidth()
 
         )
@@ -126,7 +126,7 @@ fun DetailScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Column() {
-                Text("Hora Inicio")
+                Text(stringResource(R.string.txt_horaIni))
                 TimePicker(
                     initialHour = initialHourIni,
                     initialMinute = initialMinuteIni,
@@ -138,7 +138,7 @@ fun DetailScreen(
                 )
             }
             Column() {
-                Text("Hora Fin")
+                Text(stringResource(R.string.txt_horaFin))
                 TimePicker(
                     initialHour = initialHourFin,
                     initialMinute = initialMinuteFin,
@@ -156,8 +156,8 @@ fun DetailScreen(
             onValueChange = {
                 viewModel.onEvent(DetailEvent.OnDetallesChanged(it))
             },
-            placeholder = { Text("Noche, fin de semana, notas...") }, //TODO ->Poner el texto en clarito
-            label = { Text("Concepto") },
+            placeholder = { Text(stringResource(R.string.txt_conceptoPlaceHolder)) }, //TODO ->Poner el texto en clarito
+            label = { Text(stringResource(R.string.txt_concepto)) },
             modifier = Modifier.fillMaxWidth(),
             minLines = 3,
             maxLines = 3,
@@ -182,7 +182,7 @@ fun DetailScreen(
             ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Guardar")
+            Text(stringResource(R.string.btnGuardar))
         }
 
         if (recordId != null) {
@@ -197,20 +197,20 @@ fun DetailScreen(
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Borrar", color = colorScheme.error)
+                Text(stringResource(R.string.btnBorrar), color = colorScheme.error)
             }
         }
 
-        if(showDeleteDialog){
+        if (showDeleteDialog) {
             AlertDialog(
                 icon = {
                     Icon(Icons.Filled.Delete, contentDescription = "Icono Borrar")
                 },
                 title = {
-                    Text(text = "Vas a borrar un resgistro")
+                    Text(text = stringResource(R.string.titleAlert))
                 },
                 text = {
-                    Text(text = "¿Estás seguro que quieres borrar este registro?")
+                    Text(text = stringResource(R.string.txtAlert))
                 },
                 onDismissRequest = {
                     showDeleteDialog = false
@@ -222,7 +222,7 @@ fun DetailScreen(
                             showDeleteDialog = false
                         }
                     ) {
-                        Text("Borrar")
+                        Text(stringResource(R.string.btnBorrar))
                     }
                 },
                 dismissButton = {
@@ -231,7 +231,7 @@ fun DetailScreen(
                             showDeleteDialog = false
                         }
                     ) {
-                        Text("Cancelar")
+                        Text(stringResource(R.string.btnCancelar))
                     }
                 }
             )
@@ -244,8 +244,8 @@ fun DetailScreen(
 fun SegmentedSwitch(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
-    option1: String = "Cobrada",
-    option2: String = "Pendiente",
+    option1: String = stringResource(R.string.txt_cobrada),
+    option2: String = stringResource(R.string.txt_pendiente),
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -286,7 +286,7 @@ private fun SegmentedButton(
 
             .background(
                 if (isSelected) colorButton
-                else colorButton.copy(alpha=0.1f)
+                else colorButton.copy(alpha = 0.1f)
             )
             .clickable { onClick() }
             .padding(vertical = 12.dp),

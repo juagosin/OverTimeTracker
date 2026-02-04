@@ -7,8 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.calleserpis.overtime.R
 
 @Composable
 fun OverTimeBottomBar(navController: NavHostController) {
@@ -19,7 +21,7 @@ fun OverTimeBottomBar(navController: NavHostController) {
         NavigationBarItem(
             label = {
                 Text(
-                    text = "Calendario"
+                    text = stringResource(R.string.titleCalendarioScreen)
                 )
             },
             selected = currentRoute?.contains("Home") == true,
@@ -33,7 +35,7 @@ fun OverTimeBottomBar(navController: NavHostController) {
         NavigationBarItem(
             label = {
                 Text(
-                    text = "Listado"
+                    text = stringResource(R.string.titleListadoScreen)
                 )
             },
             selected = currentRoute?.contains("List") == true,
