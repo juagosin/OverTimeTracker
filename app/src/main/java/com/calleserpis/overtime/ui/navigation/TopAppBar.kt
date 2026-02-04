@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -24,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun OverTimeTopAppBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute: String? = navBackStackEntry?.destination?.route
+    val isHomeRoute = currentRoute?.contains("Screens.Home") == true
     var colorTopBar = topAppBarColors(
         containerColor = MaterialTheme.colorScheme.primary,
         titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -41,7 +43,8 @@ fun OverTimeTopAppBar(navController: NavHostController) {
         colors = colorTopBar,
 
         navigationIcon = {
-            if (currentRoute != Screens.Home.route) {
+
+            if (!isHomeRoute) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
