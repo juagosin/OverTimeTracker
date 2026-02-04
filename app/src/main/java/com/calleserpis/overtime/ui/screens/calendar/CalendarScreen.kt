@@ -291,10 +291,17 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
 
 @Composable
 fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -> Unit) {
-    val colorbackground = if (day.position == DayPosition.MonthDate) {
+    var colorbackground = if (day.position == DayPosition.MonthDate) {
         Color.White
     } else {
         Color.LightGray
+    }
+    var isToday = false
+    if ((day.position == DayPosition.MonthDate) && (
+                day.date.dayOfMonth  == java.time.LocalDate.now().dayOfMonth)
+            ) {
+        isToday = true
+        colorbackground = colorScheme.primaryContainer
     }
     Box(
         modifier = Modifier
