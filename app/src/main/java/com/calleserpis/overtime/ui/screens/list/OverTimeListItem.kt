@@ -43,7 +43,7 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
         )
         ,
         onClick = {
-            onNavigateToDetail(null)
+            onNavigateToDetail(entry.id.toLong())
         }
     ) {
         Row(

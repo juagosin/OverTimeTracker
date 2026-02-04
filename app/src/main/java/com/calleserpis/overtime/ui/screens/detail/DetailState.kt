@@ -1,7 +1,7 @@
 package com.calleserpis.overtime.ui.screens.detail
 
 data class DetailState(
-
+    val id: Int = 0,
     val empresa: String = "",
     val detalles: String = "",
     val categoria: String = "",
@@ -11,6 +11,7 @@ data class DetailState(
 
 
     val isSaving: Boolean = false,
+    val isLoading: Boolean = false,
     val isSaved: Boolean = false,
     val isSuccess: Boolean = false,
     val error: String? = null

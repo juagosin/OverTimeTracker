@@ -33,6 +33,11 @@ object DateUtils {
     fun formatTime(timestamp: Long): String =
         formatDate(timestamp, "HH:mm")
 
+    fun formatHour(timestamp: Long): String =
+        formatDate(timestamp, "HH")
+    fun formatMinute(timestamp: Long): String =
+        formatDate(timestamp, "mm")
+
     fun formatShortDate(timestamp: Long): String =
         formatDate(timestamp, "dd/MM/yy")
 

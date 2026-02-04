@@ -1,7 +1,5 @@
 package com.calleserpis.overtime.ui.screens.detail
 
-import android.R.attr.label
-import android.widget.Spinner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,11 +25,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,21 +44,47 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.util.TableInfo
 
 @Composable
-fun DetailScreen(recordId: Long? = null,
-                 viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved:() ->Unit
+fun DetailScreen(
+    recordId: Long? = null,
+    viewModel: DetailScreenViewModel = hiltViewModel(), onOverTimeSaved: () -> Unit
 ) {
     var selectedOption by remember { mutableStateOf("Pendiente") }
     var selectedTime by remember { mutableStateOf("18:00") }
 
-    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    if(state.isSuccess){
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    var initialHourIni by remember { mutableIntStateOf(18) }
+    var initialMinuteIni by remember { mutableIntStateOf(0) }
+    var initialHourFin by remember { mutableIntStateOf(19) }
+    var initialMinuteFin by remember { mutableIntStateOf(0) }
+
+    if (state.isSuccess) {
         onOverTimeSaved()
     }
+    LaunchedEffect(recordId) {
+        if (recordId != null) {
+            viewModel.onEvent(DetailEvent.LoadOvertimeEntry(recordId))
+
+        }
+    }
+    LaunchedEffect(state.horaIni, state.horaFin) {
+        if (recordId != null && state.horaIni.isNotBlank() && state.horaFin.isNotBlank()) {
+            state.horaIni.split(":").takeIf { it.size == 2 }?.let { parts ->
+                initialHourIni = parts[0].toIntOrNull() ?: 18
+                initialMinuteIni = parts[1].toIntOrNull() ?: 0
+            }
+
+            state.horaFin.split(":").takeIf { it.size == 2 }?.let { parts ->
+                initialHourFin = parts[0].toIntOrNull() ?: 8
+                initialMinuteFin = parts[1].toIntOrNull() ?: 0
+            }
+
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -95,8 +118,8 @@ fun DetailScreen(recordId: Long? = null,
             Column() {
                 Text("Hora Inicio")
                 TimePicker(
-                    initialHour = 18,
-                    initialMinute = 0,
+                    initialHour = initialHourIni,
+                    initialMinute = initialMinuteIni,
                     onTimeChanged = { hour, minute ->
                         selectedTime = String.format("%02d:%02d", hour, minute)
                         viewModel.onEvent(DetailEvent.OnFechaIniChanged(selectedTime))
@@ -107,8 +130,8 @@ fun DetailScreen(recordId: Long? = null,
             Column() {
                 Text("Hora Fin")
                 TimePicker(
-                    initialHour = 18,
-                    initialMinute = 0,
+                    initialHour = initialHourFin,
+                    initialMinute = initialMinuteFin,
                     onTimeChanged = { hour, minute ->
                         selectedTime = String.format("%02d:%02d", hour, minute)
                         viewModel.onEvent(DetailEvent.OnFechaFinChanged(selectedTime))
@@ -123,7 +146,7 @@ fun DetailScreen(recordId: Long? = null,
             onValueChange = {
                 viewModel.onEvent(DetailEvent.OnDetallesChanged(it))
             },
-            placeholder = {Text("Noche, fin de semana, notas...")}, //TODO ->Poner el texto en clarito
+            placeholder = { Text("Noche, fin de semana, notas...") }, //TODO ->Poner el texto en clarito
             label = { Text("Concepto") },
             modifier = Modifier.fillMaxWidth(),
             minLines = 3,
@@ -133,8 +156,9 @@ fun DetailScreen(recordId: Long? = null,
         Spacer(modifier = Modifier.height(4.dp))
         SegmentedSwitch(
             selectedOption = selectedOption,
-            onOptionSelected = { selectedOption = it
-                               viewModel.onEvent(DetailEvent.OnCategoriaChanged(selectedOption))
+            onOptionSelected = {
+                selectedOption = it
+                viewModel.onEvent(DetailEvent.OnCategoriaChanged(selectedOption))
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -215,12 +239,12 @@ private fun SegmentedButton(
 
 @Composable
 fun TimePicker(
-    initialHour: Int = 18,
-    initialMinute: Int = 0,
+    initialHour: Int,
+    initialMinute: Int,
     onTimeChanged: (hour: Int, minute: Int) -> Unit = { _, _ -> }
 ) {
-    var hour by remember { mutableStateOf(initialHour) }
-    var minute by remember { mutableStateOf(initialMinute) }
+    var hour by remember(initialHour) { mutableStateOf(initialHour) }
+    var minute by remember(initialMinute) { mutableStateOf(initialMinute) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
 

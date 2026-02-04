@@ -1,6 +1,7 @@
 package com.calleserpis.overtime.ui.screens.detail
 
 import DatePickerDialogCustom
+import android.util.Log
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
@@ -54,7 +55,9 @@ fun DatePickerTextField(
         isError = isError,
         supportingText = supportingText?.let { { Text(it) } },
         trailingIcon = {
-            IconButton(onClick = { if (enabled) showDialog = true }) {
+            IconButton(onClick = {
+
+                if (enabled) showDialog = true }) {
                 Icon(
                     imageVector = Icons.Default.CalendarToday,
                     contentDescription = "Seleccionar fecha",
@@ -82,6 +85,7 @@ fun DatePickerTextField(
     )
 
     if (showDialog) {
+        Log.e("DatePickerTextField", "showDialog: $showDialog")
         DatePickerDialogCustom(
             initialDate = value,
             onDateSelected = { selectedDate ->

@@ -34,6 +34,7 @@ class DetailScreenViewModel @Inject constructor(
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
     init {
+
         // Inicializamos la hora ini, hora fin y categoria por si no la toca el usuario
         _state.update { it.copy(horaIni = "18:00") }
         _state.update { it.copy(horaFin = "18:00") }
@@ -71,8 +72,43 @@ class DetailScreenViewModel @Inject constructor(
                 saveOverTime()
             }
 
+            is DetailEvent.LoadOvertimeEntry -> {
+                loadOvertimeEntry(event.id.toInt())
+
+            }
+
             else -> {}
         }
+    }
+
+    private fun loadOvertimeEntry(id: Int) {
+        _state.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch {
+            try {
+                overtimeUseCases.getOvertimeEntryByIdUseCase(id).collect { overtime ->
+                    overtime.let {
+                        _state.update {
+                            it.copy(
+                                id = overtime?.id ?: 0,
+                                empresa = overtime?.empresa ?: "",
+                                detalles = overtime?.detalles ?: "",
+                                date = overtime?.dateIni ?: 0L,
+                                categoria = overtime?.categoria?.name ?: "",
+                                horaIni = DateUtils.formatTime(overtime?.dateIni!!),
+                                horaFin = DateUtils.formatTime(overtime.dateFin),
+                                )
+
+                        }
+
+                    }
+                }
+
+            } catch (e: Exception) {
+                Log.e("DetailScreenViewModel", "Error :", e)
+            }
+        }
+        _state.update { it.copy(isLoading = false) }
     }
 
     private fun saveOverTime() {
@@ -97,17 +133,19 @@ class DetailScreenViewModel @Inject constructor(
                         fechaFinLong.plus(86_400_000L) // le sumamos 24h ya que la hora de fin es menor que la de inicio
 
                 }
-                overtimeUseCases.addOvertimeUseCase(Overtime(
-                    0,
-                    _state.value.empresa,
-                    fechaInicioLong,
-                    fechaFinLong,
-                    OvertimeCategory.fromString(_state.value.categoria),
-                    _state.value.detalles
+                overtimeUseCases.addOvertimeUseCase(
+                    Overtime(
+                        _state.value.id,
+                        _state.value.empresa,
+                        fechaInicioLong,
+                        fechaFinLong,
+                        OvertimeCategory.fromString(_state.value.categoria),
+                        _state.value.detalles
 
-                ))
+                    )
+                )
                 var Overtime = Overtime(
-                    0,
+                    _state.value.id,
                     _state.value.empresa,
                     fechaInicioLong,
                     fechaFinLong,
