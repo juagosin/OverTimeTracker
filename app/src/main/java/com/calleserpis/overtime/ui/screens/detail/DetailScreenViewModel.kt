@@ -1,11 +1,8 @@
 package com.calleserpis.overtime.ui.screens.detail
 
 import android.util.Log
-import android.util.Log.e
-import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.calleserpis.overtime.domain.model.Overtime
 import com.calleserpis.overtime.domain.model.OvertimeCategory
 import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases

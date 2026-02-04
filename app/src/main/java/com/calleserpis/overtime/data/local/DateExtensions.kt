@@ -1,6 +1,5 @@
 package com.calleserpis.overtime.data.local
 
-import androidx.compose.ui.text.capitalize
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.Instant
