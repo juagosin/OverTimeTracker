@@ -296,6 +296,7 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -
         colorScheme.surfaceContainerLowest
     } else {
         colorScheme.surfaceContainer
+
     }
     var isToday = false
     if ((java.time.LocalDate.now().month == day.date.month)&& (
