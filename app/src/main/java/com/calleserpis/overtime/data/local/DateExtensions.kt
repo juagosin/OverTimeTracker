@@ -1,6 +1,7 @@
 package com.calleserpis.overtime.data.local
 
 import androidx.compose.ui.text.capitalize
+import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
@@ -62,6 +63,12 @@ fun Long.toDayOfMonth(): Int {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this
     return calendar.get(Calendar.DAY_OF_MONTH)
+}
+fun Long.toDayOfWeek(): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = this
+    val dateFormat = SimpleDateFormat("EEE", Locale.getDefault())
+    return dateFormat.format(calendar.time)
 }
 fun Long.toMonthShortName(locale: Locale = Locale.getDefault()): String {
     return Instant.ofEpochMilli(this)

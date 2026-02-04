@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.calleserpis.overtime.data.local.timeDifference
 import com.calleserpis.overtime.data.local.toDayOfMonth
+import com.calleserpis.overtime.data.local.toDayOfWeek
 import com.calleserpis.overtime.data.local.toHourMinute
 import com.calleserpis.overtime.data.local.toMonthShortName
 import com.calleserpis.overtime.domain.model.Overtime
@@ -64,7 +65,7 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "LUN",
+                    text = entry.dateIni.toDayOfWeek(),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
 
