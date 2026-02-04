@@ -156,7 +156,9 @@ fun DetailScreen(
             onValueChange = {
                 viewModel.onEvent(DetailEvent.OnDetallesChanged(it))
             },
-            placeholder = { Text(stringResource(R.string.txt_conceptoPlaceHolder)) }, //TODO ->Poner el texto en clarito
+            placeholder = {
+                Text(stringResource(R.string.txt_conceptoPlaceHolder), color = colorScheme.onSurface.copy(alpha = 0.2f))
+                          }, //TODO ->Poner el texto en clarito
             label = { Text(stringResource(R.string.txt_concepto)) },
             modifier = Modifier.fillMaxWidth(),
             minLines = 3,
