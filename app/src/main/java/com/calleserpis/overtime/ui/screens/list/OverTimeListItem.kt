@@ -21,10 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.calleserpis.overtime.R
 import com.calleserpis.overtime.data.local.timeDifference
 import com.calleserpis.overtime.data.local.toDayOfMonth
 import com.calleserpis.overtime.data.local.toDayOfWeek
@@ -101,10 +103,10 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
                     fontSize = 14.sp,
                     )
                 Row(verticalAlignment = Alignment.CenterVertically){
-                    var textOvertime = "Pendiente"
+                    var textOvertime = stringResource(R.string.txt_pendiente)
                     var colorOvertime = noCobrada
                     if(entry.categoria.toString() == "COBRADA"){
-                        textOvertime = "Cobrada"
+                        textOvertime = stringResource(R.string.txt_cobrada)
                         colorOvertime = cobrada
                     }
                     Icon(
@@ -115,7 +117,7 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Cobrada",
+                        text = textOvertime,
                         fontSize = 13.sp,
                         color = colorOvertime,
                         fontWeight = FontWeight.Medium

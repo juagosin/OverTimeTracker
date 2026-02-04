@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">OverTime</string>
     <string name="txt_close">Cerrar</string>
+
+    <string name="txt_pendiente">Pendiente</string>
+    <string name="txt_cobrada">Cobrada</string>
+
     <string name="select_date">Seleccionar mes y año</string>
 
 </resources>
