@@ -298,7 +298,7 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -
         colorScheme.surfaceContainer
     }
     var isToday = false
-    if ((day.position == DayPosition.MonthDate) && (
+    if ((java.time.LocalDate.now().month == day.date.month)&& (
                 day.date.dayOfMonth  == java.time.LocalDate.now().dayOfMonth)
             ) {
         isToday = true
