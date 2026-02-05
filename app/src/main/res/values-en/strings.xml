@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">OverTime</string>
+    <string name="txt_close">Close</string>
+    <string name="btnGuardar">Save</string>
+    <string name="btnBorrar">Delete</string>
+    <string name="btnCancelar">Cancel</string>
+    <string name="titleAlert">You are about to delete a record</string>
+    <string name="txtAlert">Are you sure you want to delete this record?</string>
+
+    <string name="titleCalendarioScreen">Calendar</string>
+    <string name="titleListadoScreen">List</string>
+
+    <string name="txt_pendiente">Pending</string>
+    <string name="txt_cobrada">Paid</string>
+
+    <string name="txt_empresa">Company</string>
+    <string name="txt_concepto">Concept</string>
+    <string name="txt_conceptoPlaceHolder">Night turn, weekend, notes...</string>
+    <string name="txt_horaIni">Start Time</string>
+    <string name="txt_horaFin">End Time</string>
+
+    <string name="select_date">Select month and year</string>
+
+</resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OverTime</string>
+    <string name="app_name">Horas Extra</string>
     <string name="txt_close">Cerrar</string>
     <string name="btnGuardar">Guardar</string>
     <string name="btnBorrar">Borrar</string>

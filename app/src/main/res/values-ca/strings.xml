@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Hores Extra</string>
+    <string name="txt_close">Tancar</string>
+    <string name="btnGuardar">Guardar</string>
+    <string name="btnBorrar">Esborrar</string>
+    <string name="btnCancelar">Cancel·lar</string>
+    <string name="titleAlert">Vas a esborrar un registre</string>
+    <string name="txtAlert">Estàs segur que vols esborrar este registre?</string>
+
+    <string name="titleCalendarioScreen">Calendari</string>
+    <string name="titleListadoScreen">Llistat</string>
+
+    <string name="txt_pendiente">Pendent</string>
+    <string name="txt_cobrada">Cobrada</string>
+
+    <string name="txt_empresa">Empresa</string>
+    <string name="txt_concepto">Concepte</string>
+    <string name="txt_conceptoPlaceHolder">Nit, cap de setmana, notes...</string>
+    <string name="txt_horaIni">Hora d\'inici</string>
+    <string name="txt_horaFin">Hora de fi</string>
+
+    <string name="select_date">Seleccionar mes i any</string>
+</resources>
