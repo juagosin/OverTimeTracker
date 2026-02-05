@@ -57,7 +57,8 @@ fun DetailScreen(
     onOverTimeSaved: () -> Unit,
     onOverTimeDeleted: () -> Unit
 ) {
-    var selectedOption by remember { mutableStateOf("Pendiente") }
+    val defaultValue = stringResource(R.string.txt_pendiente)
+    var selectedOption by remember { mutableStateOf(defaultValue) }
     var selectedTime by remember { mutableStateOf("18:00") }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -282,7 +283,7 @@ private fun SegmentedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colorButton = if (text == "Cobrada") cobrada else noCobrada
+    val colorButton = if (text == stringResource(R.string.txt_cobrada)) cobrada else noCobrada
     Box(
         modifier = modifier
 
