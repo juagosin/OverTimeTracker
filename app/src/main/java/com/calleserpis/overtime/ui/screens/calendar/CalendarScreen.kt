@@ -91,7 +91,7 @@ fun Calendar(stateCalendar: CalendarState, viewModel: CalendarViewModel = hiltVi
     val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
     val endMonth = remember { currentMonth.plusMonths(0) } // Adjust as needed
     val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
-    val daysOfWeek = remember { daysOfWeek() }
+    val daysOfWeek = remember { daysOfWeek(firstDayOfWeek = firstDayOfWeek) }
 
     val state = rememberCalendarState(
         startMonth = startMonth,

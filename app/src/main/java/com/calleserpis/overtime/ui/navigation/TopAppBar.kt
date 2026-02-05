@@ -13,9 +13,11 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.calleserpis.overtime.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,7 @@ fun OverTimeTopAppBar(navController: NavHostController) {
         title =
             {
                 Text(
-                    text = "OverTime",
+                    text = stringResource(R.string.app_name),
                     modifier = Modifier.padding(12.dp)
                 )
 
