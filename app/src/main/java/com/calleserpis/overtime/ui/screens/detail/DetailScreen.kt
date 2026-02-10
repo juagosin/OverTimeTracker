@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.screens.detail
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -58,6 +59,7 @@ fun DetailScreen(
     onOverTimeDeleted: () -> Unit
 ) {
     val defaultValue = stringResource(R.string.txt_pendiente)
+
     var selectedOption by remember { mutableStateOf(defaultValue) }
     var selectedTime by remember { mutableStateOf("18:00") }
 
@@ -79,7 +81,12 @@ fun DetailScreen(
         if (recordId != null) {
             viewModel.onEvent(DetailEvent.LoadOvertimeEntry(recordId))
 
+
         }
+    }
+    LaunchedEffect(state.categoria) {
+        selectedOption = state.categoria.lowercase().replaceFirstChar { it.uppercase() }
+        Log.d("DetailScreen", "selectedOption: $selectedOption")
     }
     LaunchedEffect(state.horaIni, state.horaFin) {
         if (recordId != null && state.horaIni.isNotBlank() && state.horaFin.isNotBlank()) {
