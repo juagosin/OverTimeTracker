@@ -1,5 +1,6 @@
 package com.calleserpis.overtime.ui.navigation
 
+import android.net.http.SslCertificate.saveState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -7,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.calleserpis.overtime.R
@@ -25,7 +27,15 @@ fun OverTimeBottomBar(navController: NavHostController) {
             },
             selected = currentRoute?.contains("Home") == true,
             onClick = {
-                navController.navigate(Screens.Home)
+                navController.navigate(Screens.Home){
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+
+                    launchSingleTop = true
+
+                    restoreState = true
+                }
             },
             icon = {
                 Icon(Screens.Home.icon, contentDescription = "")
@@ -40,7 +50,15 @@ fun OverTimeBottomBar(navController: NavHostController) {
             selected = currentRoute?.contains("List") == true,
             onClick = {
 
-                navController.navigate(Screens.List)
+                navController.navigate(Screens.List){
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+
+                    launchSingleTop = true
+
+                    restoreState = true
+                }
             },
             icon = {
                 Icon(Screens.List.icon, contentDescription = "")
