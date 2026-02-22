@@ -254,8 +254,8 @@ fun DetailScreen(
 fun SegmentedSwitch(
     selectedOption: String,
     onOptionSelected: (String) -> Unit,
-    option1: String = stringResource(R.string.txt_cobrada),
-    option2: String = stringResource(R.string.txt_pendiente),
+    option1: String = "Cobrada",
+    option2: String = "Pendiente",
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -265,7 +265,7 @@ fun SegmentedSwitch(
             .clip(RoundedCornerShape(8.dp))
     ) {
         SegmentedButton(
-            text = option1,
+            text = stringResource(R.string.txt_cobrada),
             isSelected = selectedOption == option1,
             onClick = { onOptionSelected(option1) },
             modifier = Modifier.weight(1f)
@@ -274,7 +274,7 @@ fun SegmentedSwitch(
         //Spacer(modifier = Modifier.width(4.dp))
 
         SegmentedButton(
-            text = option2,
+            text = stringResource(R.string.txt_pendiente),
             isSelected = selectedOption == option2,
             onClick = { onOptionSelected(option2) },
             modifier = Modifier.weight(1f)
