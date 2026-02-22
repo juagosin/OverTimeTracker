@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import com.calleserpis.overtime.R
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -98,12 +99,12 @@ fun DatePickerDialogCustom(
                         showTimePicker = false
                     }
                 ) {
-                    Text(text = "Aceptar")
+                    Text(text = stringResource(R.string.btnAceptar))
                 }
             },
             dismissButton = {
                 TextButton(onClick = onDismiss) {
-                    Text(text = "Cancelar")
+                    Text(text = stringResource(R.string.btnCancelar))
                 }
             }
         ) {
