@@ -3,6 +3,7 @@
     <string name="txt_close">Tancar</string>
     <string name="btnGuardar">Guardar</string>
     <string name="btnBorrar">Esborrar</string>
+    <string name="btnAceptar">Acceptar</string>
     <string name="btnCancelar">Cancel·lar</string>
     <string name="titleAlert">Vas a esborrar un registre</string>
     <string name="txtAlert">Estàs segur que vols esborrar este registre?</string>

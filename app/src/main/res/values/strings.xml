@@ -3,6 +3,7 @@
     <string name="txt_close">Cerrar</string>
     <string name="btnGuardar">Guardar</string>
     <string name="btnBorrar">Borrar</string>
+    <string name="btnAceptar">Aceptar</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="titleAlert">Vas a borrar un registro</string>
     <string name="txtAlert">¿Estás seguro que quieres borrar este registro?</string>
