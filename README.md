@@ -1,11 +1,11 @@
 # ⏱️ OverTime Tracker
 
-## [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://img.shields.io/badge/Platform-Android-green?logo=android) [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0%2B-blue?logo=kotlin)](https://img.shields.io/badge/Kotlin-2.0.21%2B-blue?logo=kotlin) [![Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose)](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose) [![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://img.shields.io/badge/License-MIT-lightgrey) [![Status](https://img.shields.io/badge/Version-1.0.0-brightgreen)](https://img.shields.io/badge/Version-1.0.0-brightgreen) [![Get it on Google Play](https://img.shields.io/badge/Google_Play-Get_it_on-brightgreen?logo)](https://play.google.com/store/apps/details?id=com.calleserpis.overtime) [![GitHub](https://img.shields.io/badge/GitHub-juagosin-black?logo=github)](https://github.com/juagosin)
+## [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://img.shields.io/badge/Platform-Android-green?logo=android) [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0%2B-blue?logo=kotlin)](https://img.shields.io/badge/Kotlin-2.0.21%2B-blue?logo=kotlin) [![Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose)](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose) [![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://img.shields.io/badge/License-MIT-lightgrey) [![Status](https://img.shields.io/badge/Version-1.1.0-brightgreen)](https://img.shields.io/badge/Version-1.1.0-brightgreen) [![Get it on Google Play](https://img.shields.io/badge/Google_Play-Get_it_on-brightgreen?logo)](https://play.google.com/store/apps/details?id=com.calleserpis.overtime) [![GitHub](https://img.shields.io/badge/GitHub-juagosin-black?logo=github)](https://github.com/juagosin)
 
 ## 🧩 Descripción
 
 **OverTime Tracker** es una aplicación Android diseñada para registrar, gestionar y analizar tus horas extras de trabajo de manera sencilla y eficiente.
-Su objetivo es ofrecer una experiencia moderna y minimalista para llevar un control detallado del tiempo extra dedicado, ayudándote a organizar tus compensaciones o cobros.
+Su objetivo es ofrecer una experiencia moderna y minimalista para llevar un control detallado del tiempo extra dedicado, ayudándote a organizar tus compensaciones o cobros, incluyendo tambien el dinero generado por cada registro.
 
 ---
 
@@ -13,6 +13,8 @@ Su objetivo es ofrecer una experiencia moderna y minimalista para llevar un cont
 
 * ⏱️ **Registro intuitivo de horas**
 Añade tus horas y minutos extra de forma rápida y sencilla.
+* 💶 **Gestión del dinero generado**
+Registra el importe asociado a cada hora extra y visualiza el total mensual generado directamente desde el calendario.
 * 🏠 **Pantalla principal (Home)**
 Visualiza un resumen rápido de tus horas acumuladas esta semana o mes de un solo vistazo.
 * 📊 **Historial y análisis**
@@ -62,7 +64,7 @@ Lleva un seguimiento de las jornadas anteriores para saber exactamente cuánto t
 
 ## 🧪 Estado del proyecto
 
-🟢 **Versión actual:** `v1.0.0`
+🟢 **Versión actual:** `v1.1.0`
 
 🔧 Proyecto en desarrollo activo.
 
