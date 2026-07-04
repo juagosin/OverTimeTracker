@@ -17,8 +17,8 @@ Añade tus horas y minutos extra de forma rápida y sencilla.
 Visualiza un resumen rápido de tus horas acumuladas esta semana o mes de un solo vistazo.
 * 📊 **Historial y análisis**
 Lleva un seguimiento de las jornadas anteriores para saber exactamente cuánto tiempo has acumulado, visualizándolo a través de un calendario integrado.
-* 🧠 **Arquitectura moderna (MVVM)**
-Basada en buenas prácticas de Android para garantizar escalabilidad y mantenibilidad.
+* 🧠 **Arquitectura moderna (Clean Architecture + MVI en UI)**
+ Basada en buenas prácticas de Android para garantizar escalabilidad y mantenibilidad.
 * 💉 **Inyección de dependencias con Dagger Hilt**
 * 🗄️ **Persistencia local con Room Database**
 * 🎨 **Interfaz construida en Jetpack Compose (Material 3)**
@@ -31,7 +31,7 @@ Basada en buenas prácticas de Android para garantizar escalabilidad y mantenibi
 |------------|-------------|
 | **Lenguaje** | [Kotlin](https://kotlinlang.org/) |
 | **UI Toolkit** | [Jetpack Compose](https://developer.android.com/jetpack/compose) |
-| **Arquitectura** | MVVM |
+| **Arquitectura** | Clean Architecture + MVI en UI |
 | **DI Framework** | [Dagger Hilt](https://dagger.dev/hilt/) |
 | **Base de datos local** | [Room](https://developer.android.com/training/data-storage/room) |
 | **Navegación** | [Navigation Compose](https://developer.android.com/jetpack/compose/navigation) |
