@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -57,6 +59,7 @@ import com.kizitonwose.calendar.core.DayPosition
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -76,6 +79,7 @@ fun CalendarScreen(
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
+                MonthlyMoneySummaryCard(totalMonthMoney = stateCalendar.totalMonthMoney)
                 if (stateCalendar.dayEntries.isNotEmpty()) {
                     stateCalendar.dayEntries.forEach { entry ->
                         OverTimeListItem(
@@ -180,6 +184,34 @@ fun Calendar(stateCalendar: CalendarState, viewModel: CalendarViewModel = hiltVi
     }
 
 
+}
+
+@Composable
+private fun MonthlyMoneySummaryCard(totalMonthMoney: Double) {
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.txt_dinero_mensual_generado),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = formatMoney(totalMonthMoney),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+    }
 }
 
 @Composable
@@ -360,4 +392,8 @@ fun Day(day: CalendarDay, stateCalendar: CalendarState, onClick: (CalendarDay) -
 
         }
     }
+}
+
+private fun formatMoney(amount: Double): String {
+    return "${DecimalFormat("0.00").format(amount)} €"
 }

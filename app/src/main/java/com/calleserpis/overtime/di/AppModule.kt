@@ -32,7 +32,9 @@ object AppModule {
             app,
             OvertimeDatabase::class.java,
             "overtime_db"
-        ).build()
+        )
+            .addMigrations(OvertimeDatabase.MIGRATION_1_2)
+            .build()
     }
 
     @Provides

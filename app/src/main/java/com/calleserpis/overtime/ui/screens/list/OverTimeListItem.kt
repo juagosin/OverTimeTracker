@@ -35,6 +35,7 @@ import com.calleserpis.overtime.data.local.toMonthShortName
 import com.calleserpis.overtime.domain.model.Overtime
 import com.calleserpis.overtime.ui.theme.cobrada
 import com.calleserpis.overtime.ui.theme.noCobrada
+import java.text.DecimalFormat
 
 @Composable
 fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
@@ -122,6 +123,12 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
                         color = colorOvertime,
                         fontWeight = FontWeight.Medium
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = formatMoney(entry.dinero),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                 }
             }
 
@@ -135,4 +142,8 @@ fun OverTimeListItem(onNavigateToDetail: (Long?) -> Unit, entry: Overtime) {
         }
     }
 
+}
+
+private fun formatMoney(amount: Double): String {
+    return "${DecimalFormat("0.00").format(amount)} €"
 }

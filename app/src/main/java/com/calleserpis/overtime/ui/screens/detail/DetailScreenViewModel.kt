@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
@@ -29,6 +30,7 @@ class DetailScreenViewModel @Inject constructor(
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    private val moneyRegex = Regex("^\\d*(?:[.,]\\d{0,2})?$")
 
     init {
 
@@ -46,6 +48,12 @@ class DetailScreenViewModel @Inject constructor(
 
             is DetailEvent.OnDetallesChanged -> {
                 _state.update { it.copy(detalles = event.value) }
+            }
+
+            is DetailEvent.OnDineroChanged -> {
+                if (event.value.isEmpty() || moneyRegex.matches(event.value)) {
+                    _state.update { it.copy(dinero = event.value) }
+                }
             }
 
             is DetailEvent.OnDateChanged -> {
@@ -109,9 +117,10 @@ class DetailScreenViewModel @Inject constructor(
                             it.copy(
                                 id = overtime?.id ?: 0,
                                 empresa = overtime?.empresa ?: "",
+                                dinero = formatMoneyInput(overtime?.dinero ?: 0.0),
                                 detalles = overtime?.detalles ?: "",
                                 date = overtime?.dateIni ?: 0L,
-                                categoria = overtime?.categoria?.name ?: "",
+                                categoria = overtime?.categoria?.value ?: "",
                                 horaIni = DateUtils.formatTime(overtime?.dateIni!!),
                                 horaFin = DateUtils.formatTime(overtime.dateFin),
                             )
@@ -157,18 +166,10 @@ class DetailScreenViewModel @Inject constructor(
                         fechaInicioLong,
                         fechaFinLong,
                         OvertimeCategory.fromString(_state.value.categoria),
-                        _state.value.detalles
+                        _state.value.detalles,
+                        dinero = parseMoney(_state.value.dinero)
 
                     )
-                )
-                var Overtime = Overtime(
-                    _state.value.id,
-                    _state.value.empresa,
-                    fechaInicioLong,
-                    fechaFinLong,
-                    OvertimeCategory.fromString(_state.value.categoria),
-                    _state.value.detalles
-
                 )
 
                 _state.update { it.copy(isSuccess = true) }
@@ -207,6 +208,14 @@ class DetailScreenViewModel @Inject constructor(
         } catch (e: Exception) {
             null
         }
+    }
+
+    private fun parseMoney(value: String): Double {
+        return value.replace(',', '.').toDoubleOrNull() ?: 0.0
+    }
+
+    private fun formatMoneyInput(value: Double): String {
+        return DecimalFormat("0.##").format(value)
     }
 
 }

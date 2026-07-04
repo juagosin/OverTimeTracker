@@ -1,8 +1,6 @@
 package com.calleserpis.overtime.ui.screens.calendar
 
 import android.util.Log
-import android.util.Log.e
-import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases
@@ -74,14 +72,17 @@ class CalendarViewModel @Inject constructor(
                 overtimeUseCases.getOvertimeEntriesByMonthUseCase(month.toString())
                     .collect { entries ->
                         _state.update { currentState ->
-                            currentState.copy(monthEntries = entries)
+                            currentState.copy(
+                                monthEntries = entries,
+                                totalMonthMoney = entries.sumOf { it.dinero }
+                            )
                         }
                     }
 
 
             } catch (e: Exception) {
 
-                _state.update { it.copy(monthEntries = emptyList()) }
+                _state.update { it.copy(monthEntries = emptyList(), totalMonthMoney = 0.0) }
             }
 
         }
