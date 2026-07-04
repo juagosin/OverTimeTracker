@@ -7,6 +7,7 @@ data class CalendarState(
     val selectedDate: LocalDate = LocalDate.now(),
     val selectedMonth: LocalDate = LocalDate.now(),
     val monthEntries: List<Overtime> = emptyList(),
+    val totalMonthMoney: Double = 0.0,
     val dayEntries: List<Overtime> = emptyList(),
 
     val isLoading: Boolean = false,

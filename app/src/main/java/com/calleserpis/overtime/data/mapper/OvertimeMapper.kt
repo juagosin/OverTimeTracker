@@ -11,7 +11,8 @@ fun OvertimeEntryEntity.toDomain() : Overtime{
         dateIni = dateIni,
         dateFin = dateFin,
         categoria = OvertimeCategory.fromString(categoria),
-        detalles = detalles
+        detalles = detalles,
+        dinero = dinero
     )
 }
 
@@ -22,7 +23,8 @@ fun Overtime.toEntity() : OvertimeEntryEntity{
         dateIni = dateIni,
         dateFin = dateFin,
         categoria = categoria.value,
-        detalles = detalles
+        detalles = detalles,
+        dinero = dinero
     )
 }
 

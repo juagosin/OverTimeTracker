@@ -6,7 +6,8 @@ data class Overtime (
     val dateIni: Long,
     val dateFin: Long,
     val categoria: OvertimeCategory,
-    val detalles: String
+    val detalles: String,
+    val dinero: Double = 0.0
 )
 
 enum class OvertimeCategory(

@@ -11,5 +11,6 @@ data class OvertimeEntryEntity(
     val dateFin: Long,
     val categoria: String,
     val detalles: String,
+    val dinero: Double = 0.0,
 
 )
