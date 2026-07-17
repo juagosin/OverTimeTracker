@@ -10,6 +10,7 @@
 
     <string name="titleCalendarioScreen">Calendario</string>
     <string name="titleListadoScreen">Listado</string>
+    <string name="titleResumenScreen">Resumen</string>
 
     <string name="txt_pendiente">Pendiente</string>
     <string name="txt_cobrada">Cobrada</string>
@@ -23,5 +24,34 @@
     <string name="txt_horaFin">Hora Fin</string>
 
     <string name="select_date">Seleccionar mes y año</string>
+    <string name="navigation_back">Volver</string>
+    <string name="summary_period_week">Semana</string>
+    <string name="summary_period_month">Mes</string>
+    <string name="summary_previous_period">Periodo anterior</string>
+    <string name="summary_next_period">Periodo siguiente</string>
+    <string name="summary_total_hours">Horas totales</string>
+    <string name="summary_total_money">Dinero total</string>
+    <string name="summary_total_entries">Registros</string>
+    <string name="summary_pending_hours">Horas pendientes</string>
+    <string name="summary_pending_money">Dinero pendiente</string>
+    <string name="summary_paid_hours">Horas cobradas</string>
+    <string name="summary_paid_money">Dinero cobrado</string>
+    <string name="summary_entries_title">Entradas del periodo</string>
+    <string name="summary_empty">No hay registros en este periodo</string>
+    <string name="summary_empty_hint">Prueba a cambiar de semana o mes, o crea una nueva entrada para empezar a ver resumenes.</string>
+    <string name="summary_export_pdf">Exportar PDF</string>
+    <string name="summary_share">Compartir</string>
+    <string name="summary_export_error">No se ha podido abrir el PDF exportado</string>
+    <string name="summary_share_error">No se ha podido compartir el resumen</string>
+    <string name="summary_pdf_title">Resumen de horas extra</string>
+    <string name="summary_pdf_metrics">Metricas</string>
+    <string name="summary_total_entries_value">Registros: %1$d</string>
+    <string name="summary_total_hours_value">Horas totales: %1$s</string>
+    <string name="summary_total_money_value">Dinero total: %1$s</string>
+    <string name="summary_pending_hours_value">Horas pendientes: %1$s</string>
+    <string name="summary_pending_money_value">Dinero pendiente: %1$s</string>
+    <string name="summary_paid_hours_value">Horas cobradas: %1$s</string>
+    <string name="summary_paid_money_value">Dinero cobrado: %1$s</string>
+    <string name="summary_share_text">Resumen %1$s\nRegistros: %2$d\nHoras extra: %3$s\nTotal generado: %4$s\nPendiente: %5$s | %6$s\nCobrado: %7$s | %8$s</string>
 
 </resources>

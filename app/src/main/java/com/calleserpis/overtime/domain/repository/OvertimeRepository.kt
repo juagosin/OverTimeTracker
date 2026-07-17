@@ -8,6 +8,7 @@ interface OvertimeRepository {
     fun getOvertimeEntryById(id: Int): Flow<Overtime?>
 
     fun getOvertimeEntries(): Flow<List<Overtime>>
+    fun getOvertimeEntriesByRange(startDate: Long, endDate: Long): Flow<List<Overtime>>
 
     fun getOvertimeEntriesByMonth(yearMonth: String): Flow<List<Overtime>>
     fun getOvertimeEntriesByMonthDay(yearMonthDay: String): Flow<List<Overtime>>

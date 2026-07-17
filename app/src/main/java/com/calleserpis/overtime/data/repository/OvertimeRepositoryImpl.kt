@@ -12,7 +12,6 @@ import com.calleserpis.overtime.domain.repository.OvertimeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import java.util.Date
 
 class OvertimeRepositoryImpl(
     private val overtimeDao: OvertimeDao,
@@ -26,14 +25,16 @@ class OvertimeRepositoryImpl(
         return overtimeDao.getOvertimeEntries().map { it.toDomain() }
     }
 
+    override fun getOvertimeEntriesByRange(startDate: Long, endDate: Long): Flow<List<Overtime>> {
+        return overtimeDao.getOvertimeEntriesByRange(startDate, endDate).map { it.toDomain() }
+    }
+
     override fun getOvertimeEntriesByMonth(yearMonth: String): Flow<List<Overtime>> {
         val (startDate, endDate) = yearMonth.toMonthRange()
 
         return overtimeDao.getOvertimeEntriesByMonth(startDate, endDate).onEach {
                 entities ->
-           // Log.d("OvertimeRepo", "Raw entities from DB: ${entities.size}")
-            entities.forEach { entity ->
-              //  Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
+            entities.forEach { _ ->
             }
         }.map { it.toDomain() }
     }
@@ -45,8 +46,7 @@ class OvertimeRepositoryImpl(
         return overtimeDao.getOvertimeEntriesByMonthDay(startDate, endDate).onEach {
                 entities ->
 
-            entities.forEach { entity ->
-                //Log.d("OvertimeRepo", "Entity - ID: ${entity.id}, dateIni: ${entity.dateIni} (${Date(entity.dateIni)})")
+            entities.forEach { _ ->
             }
         }.map { it.toDomain() }
     }
