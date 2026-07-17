@@ -15,6 +15,13 @@ interface OvertimeDao {
     fun getOvertimeEntries(): Flow<List<OvertimeEntryEntity>>
 
     @Query("""
+        SELECT * FROM overtime_entry
+        WHERE dateIni >= :startDate AND dateIni < :endDate
+        ORDER BY dateIni DESC
+    """)
+    fun getOvertimeEntriesByRange(startDate: Long, endDate: Long): Flow<List<OvertimeEntryEntity>>
+
+    @Query("""
         SELECT * FROM overtime_entry 
         WHERE dateIni >= :startDate AND dateIni < :endDate 
         ORDER BY dateIni DESC

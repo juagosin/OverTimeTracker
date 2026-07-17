@@ -23,18 +23,28 @@ import com.calleserpis.overtime.R
 @Composable
 fun OverTimeTopAppBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute: String? = navBackStackEntry?.destination?.route
-    val isHomeRoute = currentRoute?.contains("Screens.Home") == true
+    val currentDestination = navBackStackEntry?.destination
+    val isSummaryRoute = currentDestination.matchesRoute(Screens.Summary::class)
+    val isHomeRoute = currentDestination.matchesRoute(Screens.Home::class)
+    val isListRoute = currentDestination.matchesRoute(Screens.List::class)
+    val isTopLevelRoute = isSummaryRoute || isHomeRoute || isListRoute
     var colorTopBar = topAppBarColors(
         containerColor = MaterialTheme.colorScheme.primary,
         titleContentColor = MaterialTheme.colorScheme.onPrimary,
     )
 
+    val title = when {
+        isSummaryRoute -> stringResource(R.string.titleResumenScreen)
+        isHomeRoute -> stringResource(R.string.titleCalendarioScreen)
+        isListRoute -> stringResource(R.string.titleListadoScreen)
+        else -> stringResource(R.string.app_name)
+    }
+
     TopAppBar(
         title =
             {
                 Text(
-                    text = stringResource(R.string.app_name),
+                    text = title,
                     modifier = Modifier.padding(12.dp)
                 )
 
@@ -43,13 +53,13 @@ fun OverTimeTopAppBar(navController: NavHostController) {
 
         navigationIcon = {
 
-            if (!isHomeRoute) {
+            if (!isTopLevelRoute) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.navigation_back),
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }

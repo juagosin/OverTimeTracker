@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 fun OverTimeScaffold(modifier: Modifier) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute: String? = navBackStackEntry?.destination?.route
+    val currentDestination = navBackStackEntry?.destination
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -30,7 +30,7 @@ fun OverTimeScaffold(modifier: Modifier) {
             OverTimeBottomBar(navController)
         },
         floatingActionButton = {
-            if (currentRoute?.contains("Detail") == false) {
+            if (!currentDestination.matchesRoute(Screens.Detail::class)) {
                 FloatingActionButton(
                     onClick = {
                         navController.navigate(Screens.Detail(recordId = null))

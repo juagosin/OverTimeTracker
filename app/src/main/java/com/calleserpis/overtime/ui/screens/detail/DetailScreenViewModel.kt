@@ -36,7 +36,7 @@ class DetailScreenViewModel @Inject constructor(
 
         // Inicializamos la hora ini, hora fin y categoria por si no la toca el usuario
         _state.update { it.copy(horaIni = "18:00") }
-        _state.update { it.copy(horaFin = "18:00") }
+        _state.update { it.copy(horaFin = "19:00") }
         _state.update { it.copy(categoria = "Pendiente") }
     }
 

@@ -13,6 +13,8 @@ import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthDayUse
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesByMonthUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntriesUseCase
 import com.calleserpis.overtime.domain.use_cases.GetOvertimeEntryByIdUseCase
+import com.calleserpis.overtime.domain.use_cases.GetMonthlySummaryUseCase
+import com.calleserpis.overtime.domain.use_cases.GetWeeklySummaryUseCase
 import com.calleserpis.overtime.domain.use_cases.OverTimeUseCases
 import dagger.Module
 import dagger.Provides
@@ -63,6 +65,8 @@ object AppModule {
             addOvertimeUseCase = AddOvertimeUseCase(repository),
             getOvertimeEntriesByMonthUseCase = GetOvertimeEntriesByMonthUseCase(repository),
             getOvertimeEntriesByMonthDayUseCase = GetOvertimeEntriesByMonthDayUseCase(repository),
+            getWeeklySummaryUseCase = GetWeeklySummaryUseCase(repository),
+            getMonthlySummaryUseCase = GetMonthlySummaryUseCase(repository),
             getOvertimeEntriesUseCase = GetOvertimeEntriesUseCase(repository),
             getOvertimeEntryByIdUseCase = GetOvertimeEntryByIdUseCase(repository),
             deleteOvertimeUseCase = DeleteOvertimeUseCase(repository)

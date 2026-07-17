@@ -1,6 +1,5 @@
 package com.calleserpis.overtime.ui.navigation
 
-import android.net.http.SslCertificate.saveState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -8,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.calleserpis.overtime.R
@@ -16,29 +14,35 @@ import com.calleserpis.overtime.R
 @Composable
 fun OverTimeBottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute: String? = navBackStackEntry?.destination?.route
+    val currentDestination = navBackStackEntry?.destination
 
     NavigationBar() {
+        NavigationBarItem(
+            label = {
+                Text(
+                    text = stringResource(R.string.titleResumenScreen)
+                )
+            },
+            selected = currentDestination.matchesRoute(Screens.Summary::class),
+            onClick = {
+                navController.navigateToTopLevel(Screens.Summary)
+            },
+            icon = {
+                Icon(Screens.Summary.icon, contentDescription = stringResource(R.string.titleResumenScreen))
+            }
+        )
         NavigationBarItem(
             label = {
                 Text(
                     text = stringResource(R.string.titleCalendarioScreen)
                 )
             },
-            selected = currentRoute?.contains("Home") == true,
+            selected = currentDestination.matchesRoute(Screens.Home::class),
             onClick = {
-                navController.navigate(Screens.Home){
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-
-                    launchSingleTop = true
-
-                    restoreState = true
-                }
+                navController.navigateToTopLevel(Screens.Home)
             },
             icon = {
-                Icon(Screens.Home.icon, contentDescription = "")
+                Icon(Screens.Home.icon, contentDescription = stringResource(R.string.titleCalendarioScreen))
             }
         )
         NavigationBarItem(
@@ -47,21 +51,12 @@ fun OverTimeBottomBar(navController: NavHostController) {
                     text = stringResource(R.string.titleListadoScreen)
                 )
             },
-            selected = currentRoute?.contains("List") == true,
+            selected = currentDestination.matchesRoute(Screens.List::class),
             onClick = {
-
-                navController.navigate(Screens.List){
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-
-                    launchSingleTop = true
-
-                    restoreState = true
-                }
+                navController.navigateToTopLevel(Screens.List)
             },
             icon = {
-                Icon(Screens.List.icon, contentDescription = "")
+                Icon(Screens.List.icon, contentDescription = stringResource(R.string.titleListadoScreen))
             }
         )
 

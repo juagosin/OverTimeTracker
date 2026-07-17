@@ -1,6 +1,6 @@
 # ⏱️ OverTime Tracker
 
-## [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://img.shields.io/badge/Platform-Android-green?logo=android) [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0%2B-blue?logo=kotlin)](https://img.shields.io/badge/Kotlin-2.0.21%2B-blue?logo=kotlin) [![Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose)](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose) [![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://img.shields.io/badge/License-MIT-lightgrey) [![Status](https://img.shields.io/badge/Version-1.1.0-brightgreen)](https://img.shields.io/badge/Version-1.1.0-brightgreen) [![Get it on Google Play](https://img.shields.io/badge/Google_Play-Get_it_on-brightgreen?logo)](https://play.google.com/store/apps/details?id=com.calleserpis.overtime) [![GitHub](https://img.shields.io/badge/GitHub-juagosin-black?logo=github)](https://github.com/juagosin)
+## [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://img.shields.io/badge/Platform-Android-green?logo=android) [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.0%2B-blue?logo=kotlin)](https://img.shields.io/badge/Kotlin-2.0.21%2B-blue?logo=kotlin) [![Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose)](https://img.shields.io/badge/Jetpack%20Compose-UI-orange?logo=jetpackcompose) [![License](https://img.shields.io/badge/License-MIT-lightgrey)](https://img.shields.io/badge/License-MIT-lightgrey) [![Status](https://img.shields.io/badge/Version-2.0.0-brightgreen)](https://img.shields.io/badge/Version-2.0.0-brightgreen) [![Get it on Google Play](https://img.shields.io/badge/Google_Play-Get_it_on-brightgreen?logo)](https://play.google.com/store/apps/details?id=com.calleserpis.overtime) [![GitHub](https://img.shields.io/badge/GitHub-juagosin-black?logo=github)](https://github.com/juagosin)
 
 ## 🧩 Descripción
 
@@ -15,10 +15,12 @@ Su objetivo es ofrecer una experiencia moderna y minimalista para llevar un cont
 Añade tus horas y minutos extra de forma rápida y sencilla.
 * 💶 **Gestión del dinero generado**
 Registra el importe asociado a cada hora extra y visualiza el total mensual generado directamente desde el calendario.
-* 🏠 **Pantalla principal (Home)**
-Visualiza un resumen rápido de tus horas acumuladas esta semana o mes de un solo vistazo.
-* 📊 **Historial y análisis**
-Lleva un seguimiento de las jornadas anteriores para saber exactamente cuánto tiempo has acumulado, visualizándolo a través de un calendario integrado.
+* 📈 **Dashboard con estadísticas**
+Consulta un panel resumen semanal o mensual con horas totales, dinero generado, registros pendientes y cobrados de un solo vistazo.
+* 📄 **Exportación y compartido**
+Genera un PDF del resumen del periodo y compártelo directamente desde la app.
+* 📊 **Historial y calendario**
+Lleva un seguimiento de las jornadas anteriores y consulta tus registros en el calendario y en el listado de entradas.
 * 🧠 **Arquitectura moderna (Clean Architecture + MVI en UI)**
  Basada en buenas prácticas de Android para garantizar escalabilidad y mantenibilidad.
 * 💉 **Inyección de dependencias con Dagger Hilt**
@@ -45,16 +47,16 @@ Lleva un seguimiento de las jornadas anteriores para saber exactamente cuánto t
 
 ## 📱 Capturas de pantalla
 
-| Pantalla principal | Historial | Nuevo Registro|
+| Dashboard | Calendario | Nuevo Registro|
 |--------------------|-------------------|-------------------|
-| ![Home Screenshot](screenshots/Home.png) | ![Listado Screenshot](screenshots/Historial.png) | ![New Screenshot](screenshots/New.png) |
+| ![Home Screenshot](screenshots/Dashboard.png) | ![Calendario Screenshot](screenshots/Calendario.png) | ![New Screenshot](screenshots/New.png) |
 
 ## 📱 Darkmode
 
 
-| Pantalla principal | Historial | Nuevo Registro|
+| Dashboard | Calendario | Nuevo Registro|
 |--------------------|-------------------|-------------------|
-| ![Home Screenshot](screenshots/HomeDark.png) | ![Historial Screenshot](screenshots/HistorialDark.png) | ![New Screenshot](screenshots/NewDark.png) |
+| ![Home Screenshot](screenshots/DashboardDark.png) | ![Calendario Screenshot](screenshots/CalendarioDark.png) | ![New Screenshot](screenshots/NewDark.png) |
 
 ---
 ## 📲 Descargar la app
@@ -64,13 +66,13 @@ Lleva un seguimiento de las jornadas anteriores para saber exactamente cuánto t
 
 ## 🧪 Estado del proyecto
 
-🟢 **Versión actual:** `v1.1.0`
+🟢 **Versión actual:** `v2.0.0`
 
 🔧 Proyecto en desarrollo activo.
 
 Se planifican futuras actualizaciones para:
 * Refinamiento visual.
-* 📊 Nuevas estadísticas y exportación de datos.
+* Mejoras adicionales en analítica y reporting.
 
 ---
 

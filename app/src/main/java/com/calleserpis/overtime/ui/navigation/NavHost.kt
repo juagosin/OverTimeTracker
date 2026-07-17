@@ -9,14 +9,20 @@ import androidx.navigation.toRoute
 import com.calleserpis.overtime.ui.screens.calendar.CalendarScreen
 import com.calleserpis.overtime.ui.screens.detail.DetailScreen
 import com.calleserpis.overtime.ui.screens.list.ListScreen
+import com.calleserpis.overtime.ui.screens.summary.SummaryScreen
 
 @Composable
 fun OverTimeNavHost(modifier: Modifier = Modifier, navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Home,
+        startDestination = Screens.Summary,
         modifier = modifier
     ) {
+        composable<Screens.Summary> {
+            SummaryScreen(
+                onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId = recordId)) }
+            )
+        }
         composable<Screens.Home> {
             CalendarScreen(
                 onNavigateToDetail = { recordId -> navController.navigate(Screens.Detail(recordId = recordId)) }

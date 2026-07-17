@@ -1,9 +1,9 @@
 package com.calleserpis.overtime.ui.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.DensitySmall
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable
 
@@ -11,6 +11,12 @@ import kotlinx.serialization.Serializable
 sealed class Screens {
     abstract val route: String
 
+
+    @Serializable
+    data object Summary: Screens(){
+        override val route: String = "summary"
+        val icon: ImageVector = Icons.Default.BarChart
+    }
 
     @Serializable
     data object Home: Screens(){
